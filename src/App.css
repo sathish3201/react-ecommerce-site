@@ -1,0 +1,15 @@
+.grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit , minmax(180px, 1fr));
+}
+.App{
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+}
+.App::-webkit-scrollbar{
+  display: none;
+}
+[class $="-section"]{
+  scroll-snap-align: center;
+}
+

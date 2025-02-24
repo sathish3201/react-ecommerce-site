@@ -1,0 +1,81 @@
+.navbar-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 0 10px rbga(212,212,212,0.5);
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    overflow-x: hidden;
+    transition: all 2s ease-out;
+   
+}
+
+.navbar-left{
+    display: flex;
+    justify-content: left;
+    align-items: left;
+    padding:10px;
+    margin: 0 12px;
+    flex-wrap: wrap;
+}
+.navbar-right{
+    flex-wrap: wrap;
+}
+a{
+    role : "button";
+    tabIndex : "0";
+}
+.navbar-left span{
+    cursor: pointer;
+    margin: 0 2px;
+    padding: 0 2px;
+    text-decoration: none;
+
+}
+
+span.title-item{
+    font-size:clamp(10px,40px,50px);
+    font-weight: bold;
+    font-style:italic;
+    justify-self: center;
+    align-self:center;
+}
+
+span.title-item:hover{
+    transform: rotate(360deg);
+}
+
+input[type="search"]:focus{
+    color: violet;
+}
+.navbar-left .logo{
+    background-image: url("../../assets/home/home-ganesh.avif");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 50%;
+    width:clamp(50px,5dvw,80px);
+    height:clamp(50px,5dvw,80px);
+}
+
+.navbar-right .links{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+    margin: 5px;
+    list-style-type: none;
+}
+
+.links li.primary{
+    background-color:rgba(0, 0, 199, 0.2);
+}
+
+.links li input{
+    width:clamp(200px,20dvw,300px);
+    height:clamp(30px,10dvh,60px);
+    color: aliceblue;
+}
+.links li input[type = "search"]:focus{
+   font-size: clamp(20px,7dvh,50px);
+}

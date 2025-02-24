@@ -1,0 +1,6 @@
+axios
+react-router-dom
+jwt-decode
+dotenv
+
+react-social-icons

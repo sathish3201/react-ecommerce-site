@@ -1,0 +1,29 @@
+.bar1, .bar2 ,.bar3{
+    border: 1px solid green;
+    width: 40px;
+    margin: 2px;
+    padding: 3px;
+    background-color:yellowgreen;
+    border-radius: 10px;
+    transition: all 0.4s linear;
+}
+.menu-box{
+    cursor: pointer;
+    display: inline-block;
+    padding: 1px 2px;
+    margin : 2px;
+    border-radius: 3px;
+    &:hover{
+        box-shadow: -5px -5px 14px rgba(212,212,212,0.7), 5px 5px 15px rgba(0,0,0,0.7);
+    }
+}
+
+.change .bar1{
+    transform: translate(0,10px) rotate(-45deg);
+}
+.change .bar2{
+    opacity: 0;
+}
+.change .bar3{
+    transform: translate(0,-10px) rotate(45deg);
+}
