@@ -20,7 +20,7 @@ const App = () => {
         <div className="nav-section">
           <Navbar/>
         </div>
-        <Router basename='/react-ecommerce-site'>
+        <Router basename='/'>
          <Routes>
             <Route path='/login' element={<Login/>}/>
             <Route path='/register' element={<Register/>}/>
