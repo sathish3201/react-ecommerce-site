@@ -1,5 +1,6 @@
 import React from 'react'
 import "./Contact.css"
+import Ganesh from '../../assets/utils/Ganesh';
 const Contact = () => {
   return (
     <div className='contact'>

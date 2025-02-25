@@ -1,5 +1,5 @@
 import React from 'react'
-import EcomPort from './ecommerce/EcomPort'
+
 import Navbar from './portfolio/components/navbar/Navbar'
 import Footer from './portfolio/components/footer/Footer'
 import Login from './ecommerce/components/Login'
@@ -17,10 +17,11 @@ const App = () => {
   
   return (
     <div className="App">
-        <div className="nav-section">
-          <Navbar/>
-        </div>
+       
         <Router basename='/'>
+          <div className="nav-section">
+            <Navbar/>
+          </div>
          <Routes>
             <Route path='/login' element={<Login/>}/>
             <Route path='/register' element={<Register/>}/>
@@ -34,8 +35,9 @@ const App = () => {
             <Route exact path='/' element = {<HomePort/>} />
             <Route path='*' element={<PageNotFound/>}/>
           </Routes>
+          <div className="footer-section"><Footer/></div>
        </Router>
-        <div className="footer-section"><Footer/></div>
+       
     </div>
   )
 }
