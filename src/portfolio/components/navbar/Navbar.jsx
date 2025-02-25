@@ -23,7 +23,7 @@ const Navbar = () => {
                 
                 <li className='login'><span  className='logo-item'>
                     {
-                        !!user_role ? <a href="/react-ecommerce-site/" onClick={()=> localStorage.removeItem("user_role")}>Logout</a> : <a href="/react-ecommerce-site/login"> Login</a>
+                        !!user_role ? <a href="/react-ecommerce-site/" onClick={()=> localStorage.removeItem("user_role")}>Logout</a> : <a href="/login"> Login</a>
                     } 
                     </span></li>
                 
