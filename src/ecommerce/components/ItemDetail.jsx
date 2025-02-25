@@ -13,7 +13,7 @@ const getItemDetail=(id) => products.filter(item => item.id ===id)[0];
 
 
 const ItemDetail = () => {
-    backendurl= process?.env.BACKEND_URL;
+   
     const navigate = useNavigate();
     useEffect(()=>{
         if(!user_role){
