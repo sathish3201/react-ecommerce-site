@@ -8,5 +8,5 @@ export default defineConfig({
   define: {
     'process.env': process.env // polyfill .env for your app
   },
-  base:'/react-ecommerce-site'
+  base:'/'
 })
