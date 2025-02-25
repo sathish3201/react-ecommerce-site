@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react'
 
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-// const backendurl= process.env.BACKEND_URL;
-const backendurl= "http://127.0.0.1:80";
+
+const backendurl= process.env.VITE_BACKEND_URL !== undefined ?process.env.VITE_BACKEND_URL : "http://127.0.0.1:80/api";
 
 const user_role = JSON.parse(localStorage.getItem("user_role"));
 const product_items = JSON.parse(localStorage.getItem('product-items'))
 
 const Cart = () => {
+   
     const [cart, setCart] = useState(null);
     const navigate = useNavigate()
    
@@ -24,12 +25,12 @@ const Cart = () => {
 
         useEffect(()=>{
             if(!user_role){
-                navigate("/react-ecommerce-site/login")
+                navigate("/")
                 return;
             }
             const getCart= async(token)=>{
               try{
-                  const response = await axios.get(`${backendurl}/api/cart/`,
+                  const response = await axios.get(`${backendurl}/cart/`,
                       {
                           headers : {
                               Authorization : `Bearer ${token}`,

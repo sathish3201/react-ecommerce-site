@@ -1,16 +1,19 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 const user_role = JSON.parse(localStorage.getItem("user_role"))
+
+const backendurl= process.env.VITE_BACKEND_URL !== undefined ?process.env.VITE_BACKEND_URL : "http://127.0.0.1:80/api";
 const Orders = () => {
   const navigate = useNavigate()
  
+  
   useEffect(()=>{
     if(!user_role){
-      navigate('/react-ecommerce-site/login')
+      navigate('/')
     }
     const getCart= async(token)=>{
       try{
-          const response = await axios.get(`${backendurl}/api/cart/`,
+          const response = await axios.get(`${backendurl}/cart/`,
               {
                   headers : {
                       Authorization : `Bearer ${token}`,

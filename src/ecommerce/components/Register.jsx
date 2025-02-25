@@ -3,7 +3,12 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom'
 import Ganesh from '../../portfolio/assets/utils/Ganesh';
 
+// let backendurl =  ""
+
+
+const backendurl= process.env.VITE_BACKEND_URL !== undefined ?process.env.VITE_BACKEND_URL : "http://127.0.0.1:80/api";
 const Register = () => {
+  
   const [fname, setFname] = useState('');
   const [lname, setLname] = useState('');
   const [username, setUsername] = useState('');
@@ -27,7 +32,7 @@ const Register = () => {
       return;
     }
     try{
-      const response = await axios.post(`${backendurl}/api/auth/register/`,{
+      const response = await axios.post(`${backendurl}/auth/register/`,{
         fname,
         lname,
         username,
@@ -37,7 +42,7 @@ const Register = () => {
       })
       console.log(response.data)
       // navigate to login
-      navigate('/react-ecommerce-site/login')
+      navigate('/login')
 
     }catch(error){
       if(error.response){
@@ -131,7 +136,7 @@ const Register = () => {
         </div>
   
       </form>
-      <div className="link-ext" onClick={() => {navigate("/react-ecommerce-site/login")}}>
+      <div className="link-ext" onClick={() => {navigate("/login")}}>
         <p >Already Registered</p>
       </div>
       {errorMessage && <p>{errorMessage}</p>}

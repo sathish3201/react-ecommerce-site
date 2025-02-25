@@ -2,12 +2,13 @@ import axios from 'axios';
 import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import Ganesh from '../../portfolio/assets/utils/Ganesh';
+import process from 'process';
+// let backendurl =  "http://127.0.0.1:80/api"
 
-// const backendurl= process.env.BACKEND_URL;
-const backendurl = "http://127.0.0.1:80/api"
+const backendurl= process.env.VITE_BACKEND_URL !== undefined ?process.env.VITE_BACKEND_URL : "http://127.0.0.1:80/api";
 const Login = () => {
   localStorage.removeItem("user_role");
-  
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -16,7 +17,7 @@ const Login = () => {
   const handleSubmit = async(e) =>{
     e.preventDefault();
     try{
-        const response = await axios.post(`${backendurl}/api/auth/login/`,{
+        const response = await axios.post(`${backendurl}/auth/login/`,{
             username,
             password
         });
@@ -26,7 +27,7 @@ const Login = () => {
         // getProducts(response.data.user_role.access_token);
         //  console.log(JSON.parse(localStorage.getItem("user_role")))
         // redirect to product list page
-        navigate('/react-ecommerce-site/homepage')
+        navigate('/homepage')
 
     }catch(error){
         if(error.response){
@@ -82,7 +83,7 @@ const Login = () => {
     
 </form>
 {errorMessage && <p>{errorMessage}</p>}
-<div className="link-ext" onClick={()=>{navigate('/react-ecommerce-site/register')}}>
+<div className="link-ext" onClick={()=>{navigate('/register')}}>
   <p>Register Me</p>
 </div>
 </div>

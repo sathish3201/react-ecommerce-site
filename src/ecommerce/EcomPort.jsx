@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
+import { Route, BrowserRouter as Router , Routes} from 'react-router-dom'
 import Login from './components/Login'
 import Register from './components/Register'
 
@@ -15,19 +15,19 @@ const EcomPort = () => {
   
   return (
    
-     <Router>
+     <Router basename='/react-ecommerce-site'>
       <Routes>
       
-        <Route path='/react-ecommerce-site/login' element={<Login/>}/>
-        <Route path='/react-ecommerce-site/register' element={<Register/>}/>
-        <Route path='/react-ecommerce-site/contact' element={<Contact/>}/>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/register' element={<Register/>}/>
+        <Route path='/contact' element={<Contact/>}/>
        
-        <Route path='/react-ecommerce-site/cart' element={<Cart/>}/>
-        <Route path='/react-ecommerce-site/orders' element = {<Orders/>} />
-        <Route path="/react-ecommerce-site/checkout" element = {<Checkout/>} />
-        <Route  path='/react-ecommerce-site/homepage' element= {<HomePage/>}/>
-        <Route path='/react-ecommerce-site/item/:id' element={<ItemDetail/>}/>
-        <Route exact path='/react-ecommerce-site/' element = {<HomePort/>} />
+        <Route path='/cart' element={<Cart/>}/>
+        <Route path='/orders' element = {<Orders/>} />
+        <Route path="/checkout" element = {<Checkout/>} />
+        <Route  path='/homepage' element= {<HomePage/>}/>
+        <Route path='/item/:id' element={<ItemDetail/>}/>
+        <Route exact path='/' element = {<HomePort/>} />
         <Route path='*' element={<PageNotFound/>}/>
       </Routes>
      </Router>

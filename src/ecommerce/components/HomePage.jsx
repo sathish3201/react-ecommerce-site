@@ -10,7 +10,7 @@ const HomePage = () => {
   useEffect(()=>{
     const user_role = JSON.parse(localStorage.getItem('user_role'))
     if(!user_role){
-      navigate('/react-ecommerce-site/login')
+      navigate('/')
       return;
     }
   },[])

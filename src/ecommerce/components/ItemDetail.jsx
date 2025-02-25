@@ -7,33 +7,20 @@ import Cart from './Cart';
 const products = JSON.parse(localStorage.getItem("products"));
 const user_role = JSON.parse(localStorage.getItem("user_role"));
 
-// const backendurl= process.env.BACKEND_URL;
-const backendurl= "http://127.0.0.1:80"
+const backendurl= process.env.VITE_BACKEND_URL !== undefined ?process.env.VITE_BACKEND_URL : "http://127.0.0.1:80/api";
+
 const getItemDetail=(id) => products.filter(item => item.id ===id)[0];
 
-const addItemToCart= async(item, token) =>{
-    try{
-        const response =await axios.post(`${backendurl}/api/cart/`,item,
-            {
-            headers : {
-                Authorization : `Bearer ${token}`,
-                'Content-Type':'application/json',
-            }
-        }    
-        );
-        console.log(response);
-       
-    }catch(error){
-        console.log(error)
-    }
-}
+
 const ItemDetail = () => {
+    backendurl= process?.env.BACKEND_URL;
     const navigate = useNavigate();
     useEffect(()=>{
         if(!user_role){
-            navigate('/react-ecommerce-site/login')
+            navigate('/')
             return;
         }
+        
     },[])
 
     const param = useParams();
@@ -42,6 +29,23 @@ const ItemDetail = () => {
     const [quantity,setQuantity] = useState(0);
    
     const [isAdded, setIsAdded] = useState(false);
+
+    const addItemToCart= async(item, token) =>{
+        try{
+            const response =await axios.post(`${backendurl}/cart/`,item,
+                {
+                headers : {
+                    Authorization : `Bearer ${token}`,
+                    'Content-Type':'application/json',
+                }
+            }    
+            );
+            console.log(response);
+           
+        }catch(error){
+            console.log(error)
+        }
+    }
   return (
    <div className="item-detail-container">
     <Link to="/homepage">&#8592; Back</Link>

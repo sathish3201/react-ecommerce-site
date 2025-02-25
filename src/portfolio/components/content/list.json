@@ -5,7 +5,7 @@
             "description" : "This is Fully customized and Load balanced online-store with backend API micro-services, with frontend React js, Mysql Databases."
         },
         "Snake-Game":{
-            "image" : "./src/assets/vite.svg",
+            "image" : "./vite.svg",
             "description" : "This is Fully customized Snake game"
         }
     }

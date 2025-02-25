@@ -7,7 +7,7 @@ import ProductList from './ProductList';
 const Dashboard = () => {
    const user_role = JSON.parse(localStorage.getItem("user_role"))
     if(!user_role.access_token){
-        return <Navigate to="/react-ecommerce-site/login" />
+        return <Navigate to="/" />
     }
    
     console.log(user_role.username)

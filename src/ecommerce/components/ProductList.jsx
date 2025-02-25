@@ -3,26 +3,21 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import Item from './Item';
 
-
- const backendurl= "http://127.0.0.1:80"
-// const backendurl= process.env.BACKEND_URL;
  const user_role = JSON.parse(localStorage.getItem("user_role"));
-
+ const backendurl= process.env.VITE_BACKEND_URL !== undefined ?process.env.VITE_BACKEND_URL : "http://127.0.0.1:80/api";
 const ProductList = () => {
-
+  
   const [products, setProducts] = useState(null) 
   const navigate = useNavigate()
 
-    useEffect(()=>{
-      const user_role = JSON.parse(localStorage.getItem('user_role'))
-          
+    useEffect(()=>{    
           if(!user_role){
-            navigate('/react-ecommerce-site/login')
+            navigate('/')
             
           }
       const getProducts= async(token)=>{
         try{
-            const response = await axios.get(`${backendurl}/api/products/`,
+            const response = await axios.get(`${backendurl}/products/`,
                 {
                     headers : {
                         Authorization : `Bearer ${token}`,
@@ -67,7 +62,7 @@ const ProductList = () => {
     <div className="product-list">
       {
         !!products &&  products.map((item) => (
-          <Link to={`/react-ecommerce-site/item/${item.id}`} key={item.id}>
+          <Link to={`/item/${item.id}`} key={item.id}>
             <Item
                 name= {item.name}
                 price  = {item.price} 
