@@ -1,9 +1,6 @@
 import React from 'react'
-
 import Navbar from './portfolio/components/navbar/Navbar'
 import Footer from './portfolio/components/footer/Footer'
-import Login from './ecommerce/components/Login'
-import Register from './ecommerce/components/Register'
 import Contact from './portfolio/components/contact/Contact'
 import Cart from './ecommerce/components/Cart'
 import Orders from './ecommerce/components/Orders'
@@ -11,16 +8,21 @@ import Checkout from './ecommerce/components/Checkout'
 import HomePage from './ecommerce/components/HomePage'
 import ItemDetail from './ecommerce/components/ItemDetail'
 import HomePort from './portfolio/HomePort'
-import PageNotFound from './ecommerce/components/PageNotFound'
+import PageNotFound from './auth/PageNotFound'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+import Register from './auth/Register'
+import Login from './auth/Login'
+import Add_Item from './ecommerce/tools/Add_Item'
+
 const App = () => {
-  
+  const user = useSelector((state) => state.user.user_detail)
   return (
     <div className="App">
        
         <Router basename='/'>
           <div className="nav-section">
-            <Navbar/>
+            <Navbar user={user} />
           </div>
          <Routes>
             <Route path='/login' element={<Login/>}/>
@@ -34,6 +36,8 @@ const App = () => {
             <Route path='/item/:id' element={<ItemDetail/>}/>
             <Route exact path='/' element = {<HomePort/>} />
             <Route path='*' element={<PageNotFound/>}/>
+
+            <Route path='/add-item' element={<Add_Item/>}/>
           </Routes>
           <div className="footer-section"><Footer/></div>
        </Router>

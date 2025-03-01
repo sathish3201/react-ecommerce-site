@@ -1,26 +1,14 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import ProductList from './ProductList'
-
-import { useNavigate } from 'react-router-dom'
-
+import AuthHoc from '../tools/AuthHoc'
 
 
 const HomePage = () => {
-  const navigate = useNavigate()
-  useEffect(()=>{
-    const user_role = JSON.parse(localStorage.getItem('user_role'))
-    if(!user_role){
-      navigate('/')
-      return;
-    }
-  },[])
- 
   return (
-   <section>
-     
+   <section> 
      <ProductList/>
    </section>
   )
 }
 
-export default HomePage
+export default AuthHoc(HomePage)

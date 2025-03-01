@@ -4,3 +4,4 @@ jwt-decode
 dotenv
 
 react-social-icons
+@tanstack/react-query

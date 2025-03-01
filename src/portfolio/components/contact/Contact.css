@@ -3,11 +3,11 @@
     padding: 40px 20px;
     margin: 40px 20px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     flex-wrap: wrap;
     resize: both;
-   
+  
 
     & .contact-left{
         width:clamp(600px,10dvw,900px);
@@ -65,6 +65,8 @@
                 border-radius: 3mm;
                 transition: all 0.5s linear;
                 height: clamp(34px,5dvh,50px);
+                flex-basis: 200;
+                flex-grow: 1;
                 &:hover{
                     height: 50px;
                     padding: 10px;

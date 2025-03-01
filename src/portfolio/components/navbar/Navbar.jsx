@@ -1,40 +1,44 @@
 import React, { useState } from 'react'
-import "./Navbar.css"
 import { useNavigate } from 'react-router-dom';
-const user_role = JSON.parse(localStorage.getItem("user_role"));
-const Navbar = () => {
+import { useDispatch, useSelector } from 'react-redux';
+import { remove_user } from '../../../redux/reducer/UserReducer';
+
+const Navbar = ({user}) => {
    const navigate = useNavigate();
-  console.log(user_role)
+  const dispatch = useDispatch();
+    const cartLength= useSelector((state) => state.cart.cartValues?.length)
+    const ordersLength= useSelector((state) => state.cart.ordersValues?.length)
   return (
     <header className='navbar-container'>
         <div className="navbar-left">
-            <div className="logo-item">
+            <div className="logo-item" onClick={()=> navigate('/')}>
                 <div className="logo"></div>
             </div>
-            <span className="title-item">Sathish</span>
+           {user === (undefined || null) ? (<span className="title-item"> Sathish </span>) :(<span className="title-item"> Shopping   </span>) } 
         </div>
 
-        <div className="navbar-right">
+        <div className="navbar-right" >
             <ul className="links">
                 
                 <li className='input'><input type="search" className='search-item'  id="input-item" placeholder='Search....'></input>
                 </li>
-
-                
-                
                 <li className='login'>
-                
-                    <span  className='logo-item' onClick={()=> {localStorage.removeItem("user_role"); navigate('/login')}} >
-                   Login
-                    </span>
-                    
+                { user === (undefined || null)? ( <span  className='logo-item' onClick={()=> {navigate('/login')}} >Login </span>) :
+                 (<span className="logout" onClick={()=>{dispatch(remove_user())}}> Logout</span>)
+                 }   
                 </li>
+            {!!user && <>
+              <li className="btn btn-primary" onClick={()=>{navigate('/cart')}}>
+                  Cart  <span>{!!user && cartLength}</span>
+                </li>
+                <li className="btn btn-primary" onClick={()=>{navigate('/orders')}}>
+                  Orders  <span>{!!user && ordersLength}</span>
+                </li> </>}
+               
                 <li className='contact'>
-                
-                    <span  className='logo-item' onClick={()=> {localStorage.removeItem("user_role"); navigate('/contact')}} >
+                    <span  className='logo-item' onClick={()=> {navigate('/contact')}} >
                    Contact
-                    </span>
-                    
+                </span>    
                 </li>
                 
 

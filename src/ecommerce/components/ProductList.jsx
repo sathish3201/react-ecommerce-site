@@ -1,82 +1,64 @@
 import axios from 'axios'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import Item from './Item';
+import AuthHoc from '../tools/AuthHoc';
+import { useQuery } from '@tanstack/react-query';
 
- const user_role = JSON.parse(localStorage.getItem("user_role"));
- const backendurl= process.env.VITE_BACKEND_URL !== undefined ?process.env.VITE_BACKEND_URL : "http://127.0.0.1:80/api";
-const ProductList = () => {
-  
-  const [products, setProducts] = useState(null) 
-  const navigate = useNavigate()
+import AxiosInstance from '../tools/AxiosInstance';
 
-    useEffect(()=>{    
-          if(!user_role){
-            navigate('/')
-            
-          }
-      const getProducts= async(token)=>{
-        try{
-            const response = await axios.get(`${backendurl}/products/`,
-                {
-                    headers : {
-                        Authorization : `Bearer ${token}`,
-                    },
-                }
-            );
-            setProducts(response.data);
-            
-        }catch(error){
-            console.log(error.data.response)
-        
-        }
-       
-    }
-    !!user_role && getProducts(user_role?.access_token);
-    },[])
 
-    // useEffect(()=>{
-    //   const getCart= async(token)=>{
-    //     try{
-    //         const response = await axios.get(`${backendurl}/api/cart/`,
-    //             {
-    //                 headers : {
-    //                     Authorization : `Bearer ${token}`,
-    //                 },
-    //             }
-    //         );
-    //         setCart(response.data);
-    //         console.log(response.data);
-    //     }catch(error){
-    //         console.log(error.data.response)
-        
-    //     }
-       
-    // }
-    // getCart(user_role.access_token);
-    // },[])
 
-    console.log(products);
-   localStorage.setItem('product-items',JSON.stringify(products))
-  return (
-    <div className="product-list">
+const ProductList = ({user}) => { 
+const token = user?.access_token;
+// fetching products 
+ const fetchData = async(token) => {
+  const axiosinstance  = AxiosInstance(token)
+  const response = await axiosinstance.get('/products/')
+  console.log(response)
+  return response.data;
+ }
+
+ console.log(token)
+// use query to fetch details
+const {data , error, isLoading} = useQuery({
+  queryKey : ["products", token],
+  queryFn : () => fetchData(token),
+  retry:3,
+  enabled : !!token,
+  refetchOnWindowFocus : false,
+  staleTime : 1000*60*5,
+});
+
+if(isLoading){
+  return <div className="loading">loading Products....</div>
+}
+if(error){
+  return <div className="error"> Error in Fetching products ....{error.message}</div>
+}
+if(data){
+  console.log(data)
+}
+  return(
+    <div className="container">
+      
+    <div className="row row-cols-3 rows-cols-md-2 g-4 sm:row row-cols-1">
+      
       {
-        !!products &&  products.map((item) => (
-          <Link to={`/item/${item.id}`} key={item.id}>
+       !!data &&  data?.map((item) => (
+          <div className="col" key={item.id}>
+          <Link to={`/item/${item.id}`}>
             <Item
-                name= {item.name}
-                price  = {item.price} 
-                rating = {item.rating}
-                saleDiscount={item.saleDiscount}
-                image = {item.image}
-                brand = {item.brand}
-                stock = {item.stock}
+              product= {item}
+              quantity = {null}
             />
           </Link>
+          </div>
         ))
 
       }
     </div>
+    </div>
 )
 }
-export default ProductList
+export default AuthHoc(ProductList)

@@ -3,6 +3,8 @@ import React,{useRef, useState} from 'react'
 import "./Hero.css"
 import { Navigate } from 'react-router-dom';
 import Ganesh from '../../assets/utils/Ganesh';
+import Login from '../../../auth/Login';
+
 const Hero = () => {
   const [islight,setIsLight] = useState(false);
   const check=(event)=>{
@@ -36,7 +38,7 @@ const Hero = () => {
         
         </li>
         <li className='login'>
-        <span className="login-item" onClick={() => {<Navigate to ="/react-ecommerce-site/login" />}}>Login</span>
+        <span className="login-item" onClick={() => {window.location.replace('/login')}}>Login</span>
         </li>
         </ul>
     </div>
