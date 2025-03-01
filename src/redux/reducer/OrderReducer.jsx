@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import AxiosInstance from "../../ecommerce/tools/AxiosInstance";
 
 
 
@@ -16,6 +17,7 @@ const OrderReducer= createSlice({
                 alert("order already placed!!!")
                 return;   
             }
+          
             state.orderValues.push(action.payload)
         },
         decrementorder: (state, action) =>{
@@ -26,3 +28,4 @@ const OrderReducer= createSlice({
 
 export const {incrementorder, decrementorder} = OrderReducer.actions;
 export default OrderReducer.reducer;
+

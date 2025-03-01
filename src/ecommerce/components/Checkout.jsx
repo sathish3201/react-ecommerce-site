@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import AuthHoc from '../tools/AuthHoc'
 import { useNavigate } from 'react-router-dom';
 import { incrementorder } from '../../redux/reducer/OrderReducer';
+import AxiosInstance from '../tools/AxiosInstance';
 const Checkout = ({user}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -103,16 +104,14 @@ const generateId=() =>{
 const handleSubmit=(e)=>{
   e.preventDefault();
   console.log("submit is clicked")
-  const order= {
+
+  const order_detail = {
     user : {...user.user},
     cart_items : [...cart_items],
-    total_price : total_amount
-  };
-  const order_detail = {
-    order : {...order},
+    total_price : total_amount,
     delivery_detail : {...formData}
   }
-  console.log({...order_detail})
+  handleOrder(order_detail)
   dispatch(incrementorder({orderId :generateId(), order_detail: order_detail}))
   //  api calling 
   if(validate()){
@@ -127,7 +126,14 @@ const handleSubmit=(e)=>{
   }
 };
 
- 
+ const handleOrder= async({order_detail})=>{
+
+    const id = user.user.id;
+    const axiosinstance = AxiosInstance(user?.access_token);
+    const response = await axiosinstance.post(`/orders/${id}/place-order/`,{order_detail});
+    console.log(order_detail);
+    console.log(response);
+ }
 
   return (
     
@@ -226,3 +232,4 @@ const handleSubmit=(e)=>{
 }
 
 export default AuthHoc(Checkout) 
+

@@ -42,7 +42,7 @@ if(data){
   return(
     <div className="container">
       
-    <div className="row row-cols-3 rows-cols-md-2 g-4 sm:row row-cols-1">
+    <div className="row row-cols-3 rows-cols-md-4">
       
       {
        !!data &&  data?.map((item) => (

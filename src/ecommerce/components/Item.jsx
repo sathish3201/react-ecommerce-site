@@ -5,8 +5,8 @@ import { decrement_item, increment_item, remove_from_cart } from '../../redux/re
 const Item = ({product , quantity= null}) => {
   const dispatch = useDispatch();
   console.log(quantity)
+  
  const decrementCart=(e)=>{
-
     if(quantity <=1){
       dispatch(decrement_item({id:product.id}));
       dispatch(remove_from_cart({id: product.id}));
