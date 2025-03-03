@@ -33,6 +33,8 @@ const Login = () => {
    
     if(formData.password !== formData.confPass){
       alert("Passwords  should be match...") 
+      
+      // throw Error("passwordmismatch error...")
       isValid = false
     }
    
@@ -48,9 +50,10 @@ const Login = () => {
   }
   const handleSubmit = async(e) =>{
     e.preventDefault();
-    setLoading(true)
+
    if(validate()){
       try{
+        setLoading(true)
           console.log({formData})
           const axiosinstance = AxiosInstance();
           const response = await axiosinstance.post('api/auth/register/',{
