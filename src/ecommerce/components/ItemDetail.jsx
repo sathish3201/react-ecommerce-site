@@ -4,63 +4,26 @@ import AuthHoc from '../tools/AuthHoc';
 
 import AxiosInstance from '../tools/AxiosInstance';
 import { useQuery } from '@tanstack/react-query';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { add_to_cart } from '../../redux/reducer/CartReducer';
 import { remove_user } from '../../redux/reducer/UserReducer';
 
-
-
-const backendurl= process.env.VITE_BACKEND_URL !== undefined ?process.env.VITE_BACKEND_URL : "http://127.0.0.1:80/api";
 const ItemDetail = ({user}) => {
-
   const navigate = useNavigate();
+    const products = useSelector((state) => state.products.productValues)
     const token= user?.access_token;
     const param = useParams();
     const Itemid = parseInt(param?.id)
+    const item = !!Itemid && products.filter((item)=> item.id === Itemid)[0];
     const [isAdded, setIsAdded] = useState(false);
-    const dispatch = useDispatch();
-   
-  
-
-    const getItem=async(id,token)=>{
-      // console.log(id, token)
-
-      const axiosinstance = AxiosInstance(token);
-      const response = await axiosinstance.get(`/products/${id}/get_by_id/`);
-      if(response.status == 401){
-        dispatch(remove_user())
-         navigate('/login')
-         return;
-      }
-        return response.data.product;   
-    };
-
-    const {data:item,error ,isLoading} = useQuery({
-          queryKey: ['get_item',Itemid,token],
-          queryFn: () => getItem(Itemid, token),
-          retry: 3,
-          enabled : !!Itemid && !!token,
-          refetchOnWindowFocus: false,
-          staleTime: 1000*60*5
-    });
-          
-         
-
-          if(isLoading){
-            return <p>  Loading ...</p>
-          }
-          if(error){
-            return <p>Error : {error.message}</p>
-          }
-          console.log(item)
-          
+    const dispatch = useDispatch();  
   return (
    <>
     <div className="Back btn btn-outline-primary" onClick={()=>{navigate('/homepage')}}> # Back</div>
     <div>
       <div className="card card-item d-flex flex-wrap align-content-center justify-content-evenly" >
            
-                    <img src={item?.thumbnail} alt=" image " />
+                    <img src={item?.image} alt=" image " />
 
               
                

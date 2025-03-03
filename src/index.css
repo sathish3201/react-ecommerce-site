@@ -188,5 +188,19 @@ input[type="search"]:focus{
 
 /*  navbar-css end */
 
+footer{
+  position: sticky;
+  bottom: 0;
+}
 
+.form-label{
+  position: absolute;
+  right: 20px;
+}
+.form-check{
+  transform: scale(1.5);
+   &:hover{
+    transform: scale(2.5);
+   }
+}
 

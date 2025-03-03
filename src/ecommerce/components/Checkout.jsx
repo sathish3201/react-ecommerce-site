@@ -5,12 +5,24 @@ import AuthHoc from '../tools/AuthHoc'
 import { useNavigate } from 'react-router-dom';
 import { incrementorder } from '../../redux/reducer/OrderReducer';
 import AxiosInstance from '../tools/AxiosInstance';
+import { remove_cart } from '../../redux/reducer/CartReducer';
 const Checkout = ({user}) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const cart_items = useSelector((state) => state.cart.cartValues)
+ 
+  const cart_items = useSelector((state) => state.cart.cartValues);
   const total_amount = useSelector((state)=> state.cart.total_price);
 
+  const cart_new_items= cart_items.map(item => {
+      const new_item={
+        product:{
+          id : item.product.id,
+        },
+        quantity : item.quantity
+      };
+      return new_item;
+  });
+  console.log([...cart_new_items])
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -36,7 +48,7 @@ const Checkout = ({user}) => {
     zip:'',
   });
   console.log({...formData})
-  console.log([...cart_items])
+  
   // form handle
   const handleChange=(e) =>{
     const {name, value} = e.target;
@@ -101,18 +113,31 @@ const generateId=() =>{
 }
 
 
-const handleSubmit=(e)=>{
+const handleSubmit= async(e)=>{
   e.preventDefault();
   console.log("submit is clicked")
 
   const order_detail = {
-    user : {...user.user},
-    cart_items : [...cart_items],
+    cart_items : [...cart_new_items],
     total_price : total_amount,
     delivery_detail : {...formData}
   }
-  handleOrder(order_detail)
+  try{
   dispatch(incrementorder({orderId :generateId(), order_detail: order_detail}))
+  const usid=user.user.id
+  const axiosinstance = AxiosInstance(user?.access_token);
+  const response = await axiosinstance.post(`/orders/${usid}/place-order/`, {...order_detail});
+  if(response.status == 402){
+      alert('Session TimeOut. Redirecting to Login....')
+      dispatch(remove_user())
+      window.location.replace('/login')
+  }
+  console.log({...order_detail});
+  alert(`${response.data.detail}`)
+  dispatch(remove_cart())
+  }catch(error){
+    console.log("error in posting ", error)
+  }
   //  api calling 
   if(validate()){
     console.log("validation successfull");
@@ -126,14 +151,7 @@ const handleSubmit=(e)=>{
   }
 };
 
- const handleOrder= async({order_detail})=>{
 
-    const id = user.user.id;
-    const axiosinstance = AxiosInstance(user?.access_token);
-    const response = await axiosinstance.post(`/orders/${id}/place-order/`,{order_detail});
-    console.log(order_detail);
-    console.log(response);
- }
 
   return (
     
@@ -154,7 +172,10 @@ const handleSubmit=(e)=>{
         {errors.email && (<span className="invalid-feedback">{errors.email}</span>)}
       </div>
       <div className="col-md-4">
-        <input type="tel" className="form-control" name='mobileno' placeholder='Moblie No' value={formData.mobileno} onChange={handleChange} required/>
+        <input type="text" className="form-control" name='mobileno' placeholder='Moblie No' value={formData.mobileno} onChange={handleChange} 
+        pattern="^[6-9][0-9]{9}$"
+        title="please enter valid 10 digit mobile number starting with 6,7,8,9"
+        required/>
         {errors.moblieno && (<span className="invalid-feedback">{errors.moblieno}</span>)}
       </div>
       <div className="col-md-6">
@@ -212,7 +233,10 @@ const handleSubmit=(e)=>{
 
      
       <div className="col-md-4">
-        <input type="tel" className="form-control" name='zip' placeholder='Zip' value={formData.zip} onChange={handleChange} required/>
+        <input type="tel" className="form-control" name='zip' placeholder='Zip' value={formData.zip} onChange={handleChange}
+        pattern="^\d{6}$"
+        title='please enter valid 6 digit zip code'
+        required/>
         {errors.zip && (<span className="invalid-feedback">{errors.zip}</span>)}
       </div>
           <div className="col-12">

@@ -7,14 +7,14 @@ const Navbar = ({user}) => {
    const navigate = useNavigate();
   const dispatch = useDispatch();
     const cartLength= useSelector((state) => state.cart.cartValues?.length)
-    const ordersLength= useSelector((state) => state.cart.ordersValues?.length)
+    const ordersLength= useSelector((state) => state.orders.orderValues?.length)
   return (
     <header className='navbar-container'>
         <div className="navbar-left">
             <div className="logo-item" onClick={()=> navigate('/')}>
                 <div className="logo"></div>
             </div>
-           {user === (undefined || null) ? (<span className="title-item"> Sathish </span>) :(<span className="title-item"> Shopping   </span>) } 
+           {user === (undefined || null) ? (<span className="title-item"> Sathish </span>) :(<span className="title-item" onClick={()=>{navigate('/homepage')}}> Shopping   </span>) } 
         </div>
 
         <div className="navbar-right" >
@@ -29,10 +29,10 @@ const Navbar = ({user}) => {
                 </li>
             {!!user && <>
               <li className="btn btn-primary" onClick={()=>{navigate('/cart')}}>
-                  Cart  <span>{!!user && cartLength}</span>
+                  Cart : {!!user && cartLength}
                 </li>
                 <li className="btn btn-primary" onClick={()=>{navigate('/orders')}}>
-                  Orders  <span>{!!user && ordersLength}</span>
+                  Orders :{!!user && ordersLength}
                 </li> </>}
                
                 <li className='contact'>

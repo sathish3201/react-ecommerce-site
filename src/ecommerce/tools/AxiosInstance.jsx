@@ -13,6 +13,7 @@ const AxiosInstance=(token='') => {
             'Content-Type' :'application/json',
             Authorization : token? `Bearer ${token}`: '',
         },
+        timeout: 5000,
     });
     return axiosinstance    
        

@@ -1,7 +1,31 @@
-import React from 'react'
+import React, { useState } from 'react'
 import "./Contact.css"
 import Ganesh from '../../assets/utils/Ganesh';
+import AxiosInstance from "../../../ecommerce/tools/AxiosInstance"
+
 const Contact = () => {
+  const [formData, setFormData]= useState({
+    email:'',
+    subject:'',
+    message:'',
+  });
+  const handleChange=(e)=>{
+    const {name, value} = e.target;
+    setFormData((prevData)=>({
+      ...prevData,
+      [name]: value
+    }));
+  };
+  const handleSubmit= async (e)=>{
+    e.preventDefault();
+    try{
+      const axiosinstance = AxiosInstance();
+      const response = await axiosinstance.post('/auth/contact/',{...formData})
+      alert(`${response.data.detail}`)
+    }catch(error){
+      alert(` Network Error: ${error.response}`)
+    } 
+  }
   return (
     <div className='contact'>
 
@@ -13,18 +37,19 @@ const Contact = () => {
             }}>&times;</span>
           </div>
        
-        <form action="">
-            <div className="uname">
+        <form onSubmit={handleSubmit} className='was-validate'>
            
-            <input type="text" name="username" id="username" placeholder='UserName'/>
-            </div>
-            <div className="email">
+            <div className="form-control">
          
-            <input type="email" name="email" id="email" placeholder='Email'/>
+            <input type="email" name="email" id="email" placeholder='Email' value={formData.email} onChange={handleChange} required/>
             </div>
-            <div className="subject">
+            <div className="form-control">
+           
+           <input type="text" name="subject" id="subject" placeholder='Subject' value={formData.subject} onChange={handleChange} required/>
+           </div>
+            <div className="form-control">
          
-            <textarea type="subject" name="subject" id="subject" rows={5}  placeholder='Enter your Query...'/>
+            <textarea type="message" name="message" id="message" rows={5} value={formData.message} placeholder='Enter your Query...' onChange={handleChange} required/>
             </div>
             <div className="submit">
             <button type='submit' id='submit'>Submit</button>

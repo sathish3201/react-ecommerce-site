@@ -1,41 +1,56 @@
-import React, { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-const user_role = JSON.parse(localStorage.getItem("user_role"))
+import React, { useEffect, useState } from 'react'
+import AuthHoc from '../tools/AuthHoc'
+import { useQuery } from '@tanstack/react-query'
+import AxiosInstance from '../tools/AxiosInstance'
+import { useDispatch, useSelector } from 'react-redux'
+import { add_orders_from_api, deleteOrder, fetchOrders } from '../../redux/reducer/OrderReducer'
+import Spinner from '../tools/Spinner'
 
-const backendurl= process.env.VITE_BACKEND_URL !== undefined ?process.env.VITE_BACKEND_URL : "http://127.0.0.1:80/api";
-const Orders = () => {
-  const navigate = useNavigate()
- 
-  
+const Orders = ({user}) => {
+  const token = user?.access_token;
+  const dispatch = useDispatch();
+  const {orderValues, loading, error} = useSelector((state)=> state.orders)
+
   useEffect(()=>{
-    if(!user_role){
-      navigate('/')
-    }
-    const getCart= async(token)=>{
-      try{
-          const response = await axios.get(`${backendurl}/cart/`,
-              {
-                  headers : {
-                      Authorization : `Bearer ${token}`,
-                  },
-              }
-          );
-        //  setCart(response.data)
-          setCart(response.data.filter((data) => data.user == user_role.id))
+    dispatch(fetchOrders(token))
+  },[dispatch, token])
 
-      }catch(error){
-          console.log(error)
-      
-      }
-     
+  if(loading){
+    return <Spinner/>
   }
-  !!user_role && getCart(user_role?.access_token);
-  },[])
+  if(error){
+    return <p>Error : {error}</p>
+  }
+
   return (
-    <div>
-      
-    </div>
+      <>
+      {
+        !!orderValues && orderValues?.map((order)=>(
+
+         
+          <div className="card" key={order.id}>
+              
+              <div className="btn btn-outline-danger" onClick={()=>{
+                const item={
+                  id : order?.id,
+                  token : token
+                };
+                dispatch(deleteOrder(item))}}>X</div>
+              <div className="btn btn-outline-primary">id :{order?.id}</div>
+              <div className="btn btn-outline-primary">Email :{order?.delivery_detail?.email}</div>
+              <div className="order-id"> Mobile No: {order?.delivery_detail?.mobileno}</div>
+              <div className="order-id"> Address: {order?.delivery_detail?.address}</div>
+              <div className="order-id">Country code: {order?.delivery_detail?.country}</div>
+              <div className="order-id">State Code: {order?.delivery_detail?.state}</div>
+              <div className="order-id">City : {order?.delivery_detail?.city}</div>
+              <div className="order-id">zip Code: {order?.delivery_detail?.zip}</div>
+              <div className="btn btn-success">Total Price : {order?.total_price}</div>
+
+         </div>
+        ))
+      }
+    </>
   )
 }
 
-export default Orders
+export default AuthHoc(Orders)

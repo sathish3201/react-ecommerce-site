@@ -14,6 +14,8 @@ import { useSelector } from 'react-redux'
 import Register from './auth/Register'
 import Login from './auth/Login'
 import Add_Item from './ecommerce/tools/Add_Item'
+import PasswordResetRequest from './auth/PasswordResetRequest'
+import PasswordResetConfirm from './auth/PasswordResetConfirm'
 
 const App = () => {
   const user = useSelector((state) => state.user.user_detail)
@@ -28,6 +30,8 @@ const App = () => {
             <Route path='/login' element={<Login/>}/>
             <Route path='/register' element={<Register/>}/>
             <Route path='/contact' element={<Contact/>}/>
+            <Route path='/pass-reset' element={<PasswordResetRequest/>}/>
+            <Route path='/pass-reset/:token' element={<PasswordResetConfirm/>}/>
           
             <Route path='/cart' element={<Cart/>}/>
             <Route path='/orders' element = {<Orders/>} />

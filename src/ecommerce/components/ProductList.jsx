@@ -4,48 +4,38 @@ import { Link, useNavigate } from 'react-router-dom';
 import Item from './Item';
 import AuthHoc from '../tools/AuthHoc';
 import { useQuery } from '@tanstack/react-query';
-
+import Spinner from '../tools/Spinner'
 import AxiosInstance from '../tools/AxiosInstance';
+import { useDispatch, useSelector } from 'react-redux';
+import { remove_user } from '../../redux/reducer/UserReducer';
+import { fetchProducts } from '../../redux/reducer/ProductReducer';
 
 
 
 const ProductList = ({user}) => { 
 const token = user?.access_token;
-// fetching products 
- const fetchData = async(token) => {
-  const axiosinstance  = AxiosInstance(token)
-  const response = await axiosinstance.get('/products/')
-  console.log(response)
-  return response.data;
- }
+const dispatch = useDispatch();
+const {productValues, loading, error} = useSelector((state) => state.products)
 
- console.log(token)
-// use query to fetch details
-const {data , error, isLoading} = useQuery({
-  queryKey : ["products", token],
-  queryFn : () => fetchData(token),
-  retry:3,
-  enabled : !!token,
-  refetchOnWindowFocus : false,
-  staleTime : 1000*60*5,
-});
+useEffect(()=>{
+  dispatch(fetchProducts(token))
+},[dispatch , token])
 
-if(isLoading){
-  return <div className="loading">loading Products....</div>
+if(loading){
+  return <Spinner/>
 }
 if(error){
   return <div className="error"> Error in Fetching products ....{error.message}</div>
 }
-if(data){
-  console.log(data)
-}
+
+
   return(
     <div className="container">
-      
+     
     <div className="row row-cols-3 rows-cols-md-4">
       
       {
-       !!data &&  data?.map((item) => (
+       !!productValues &&  productValues?.map((item) => (
           <div className="col" key={item.id}>
           <Link to={`/item/${item.id}`}>
             <Item

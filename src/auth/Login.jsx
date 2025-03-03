@@ -8,41 +8,48 @@ import { useDispatch } from 'react-redux';
 import Ganesh from '../portfolio/assets/utils/Ganesh';
 import { add_user } from '../redux/reducer/UserReducer';
 import AxiosInstance from '../ecommerce/tools/AxiosInstance';
-
-
+import PasswordInput from '../ecommerce/tools/PasswordInput';
+import Spinner from '../ecommerce/tools/Spinner';
 
 
 const Login = () => {
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [loading, setLoading] = useState(false)
+   const [formData, setFormData] = useState({
+      email : '',
+      password:'',
+    });
  
-  
+    const handleChange=(e)=>{
+      const {name, value} = e.target;
+      setFormData((prevData) => ({
+        ...prevData,
+        [name] : value,
+      }));
+    }
   const handleSubmit = async(e) =>{
     e.preventDefault();
+    setLoading(true)
     try{
         const axiosinstance = AxiosInstance();
         const response = await axiosinstance.post('/auth/login/',{
-            username,
-            password
+           ...formData
         });
 
         console.log(response.data.user_role)
        
         dispatch(add_user(response.data.user_role))
-        setSuccessMessage("Login Successfull !!!")
+        alert("Login Successfull !!!")
         navigate('/homepage')
     }catch(error){
-        if(error.response){
-            setErrorMessage(error.response.data.detail || "Invalid Credentials")
-        }else{
-            setErrorMessage('Network Error' || error)
-        }
+       alert(`${error.response?.data?.error} || error in login`)
+    }finally{
+      setLoading(false)
     }
+  }
+  if(loading){
+    return <Spinner/>
   }
   return (
     
@@ -59,40 +66,39 @@ const Login = () => {
   <form onSubmit={handleSubmit} className='was-validated mb-3'>
      
       <input 
+              name='email'
               className='form-control'
-              type = "text"
-              placeholder='Username'
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              type = "email"
+              placeholder='Email'
+              value={formData.email}
+              onChange={handleChange}
               required
             />
   
    
   
-      <input 
-
-              className='form-control'
-              type = "password"
-              placeholder='Password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
+        <PasswordInput
+          id = "pass"
+          name = "password"
+          placeholder = "Password"
+          value={formData.password}
+          onChange={handleChange}
+        />
         
        
 
     
       <div className="submit">
-      <button type='submit' id='submit'>LOGIN</button>
+      <button className='btn btn-outline-primary'  type='submit' id='submit'>LOGIN</button>
       <button type='reset' id='reset'>Reset</button>
       </div>
-      {successMessage && <div className='valid-feedback valid-tooltip'>{successMessage}</div>}
-      {errorMessage && <div className='invalid-feedback valid-tooltip'>{errorMessage}</div>}
-  </form>
   
+  </form>
+      
   <div className="link-ext" onClick={()=>{navigate('/register')}}>
-    <p>Register Me</p>
+    Register Me
   </div>
+      <span className=' text-primary' onClick={()=>{navigate('/pass-reset')}}>Forget Password !!!</span>
   </div>
   <div className="hero-right">
     <Ganesh />

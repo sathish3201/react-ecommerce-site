@@ -1,51 +1,74 @@
 import axios from 'axios';
 import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-
-import process from 'process';
 import { useDispatch } from 'react-redux';
 
 import Ganesh from '../portfolio/assets/utils/Ganesh';
 import { add_user } from '../redux/reducer/UserReducer';
 import AxiosInstance from '../ecommerce/tools/AxiosInstance';
-
+import PasswordInput from '../ecommerce/tools/PasswordInput';
+import Spinner from '../ecommerce/tools/Spinner';
 
 
 
 const Login = () => {
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
-  const [fname, setFname] = useState('');
-  const [lname, setLname] = useState('');
-  const [email, setEmail] = useState('');
-  const [confPass, setConfPass] = useState('');
+  const [loading, setLoading] = useState();
+  const [formData, setFormData] = useState({
+    fname:'',
+    lname : '',
+    username:'',
+    email : '',
+    password:'',
+    confPass:'',
+  });
+  const [errorsData, setErrorsData] = useState({
+    mismatch:'',
+  });
 
-  const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
- 
+  const validate=()=>{
   
+    let isValid=true;
+   
+    if(formData.password !== formData.confPass){
+      alert("Passwords  should be match...") 
+      isValid = false
+    }
+   
+    return isValid;
+  };
+
+  const handleChange=(e)=>{
+    const {name, value} = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name] : value,
+    }));
+  }
   const handleSubmit = async(e) =>{
     e.preventDefault();
-    try{
-        const axiosinstance = AxiosInstance();
-        const response = await axiosinstance.post('/auth/login/',{
-            username,
-            password
-        });
-
-        console.log(response.data.user_role)
-       
-        dispatch(add_user(response.data.user_role))
-        navigate('/homepage')
-    }catch(error){
-        if(error.response){
-            setErrorMessage(error.response.data.detail || "Invalid Credentials")
-        }else{
-            setErrorMessage('Network Error' || error)
-        }
+    setLoading(true)
+   if(validate()){
+      try{
+          console.log({formData})
+          const axiosinstance = AxiosInstance();
+          const response = await axiosinstance.post('/auth/register/',{
+          ...formData
+          });
+          console.log(response.data.user_role)
+          dispatch(add_user(response.data.user_role))
+          alert("Registration is Successfull...")
+          navigate('/homepage')
+      }catch(error){
+        alert(`${error.response?.data?.error} || error in login`)
+      }finally{
+        setLoading(false)
+      }
     }
+  }
+  if(loading){
+    return <Spinner/>
   }
   return (
     
@@ -66,73 +89,71 @@ const Login = () => {
               className='form-control'
               type = "text"
               placeholder='firstName '
-              value={fname}
-              onChange={(e) => setFname(e.target.value)}
+              name='fname'
+              value={formData.fname}
+              onChange={handleChange}
               required
             />
           
             <input 
+            name='lname'
             className='form-control '
             type = "text"
             placeholder='Last Name'
-            value={lname}
-            onChange={(e) => setLname(e.target.value)}
-            required
-          />
-           
-     
-  
-    
-    <input 
-            className='form-control'
-            type = "text"
-            placeholder='Username'
-            value={lname}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-       
-
-           <input 
-            className='form-control'
-            type = "text"
-            placeholder='Email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={formData.lname}
+            onChange={handleChange}
             required
           />
           
+       
+
+           <input 
+           name='email'
+            className='form-control'
+            type = "email"
+            placeholder='Email'
+            value={formData.email}
+            onChange={handleChange}
+            // pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+            title="Please enter valid  email address."
+            required
+          />
+           <input 
+            name='username'
+            className='form-control '
+            type = "text"
+            placeholder='Username'
+            value={formData.username}
+            onChange={handleChange}
+            required
+          />
    
-  
-  
-      <input 
-             className='form-control flex-grow-1 flex-basis-500'
-              id= "pass"
-              type = "password"
-              placeholder='Password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-       <input 
-             className='form-control'
-              id= "confPass"
-              type = "password"
-              placeholder='Confirm Password'
-              value={confPass}
-              onChange={(e) => setConfPass(e.target.value)}
-              required
-            />
+        <PasswordInput 
+          id = "pass"
+          name = "password"
+          placeholder = "Password"
+          value={formData.password}
+          onChange={handleChange}
+        />
+
+        <PasswordInput 
+          id = "confPass"
+          name = "confPass"
+          placeholder = "Confirm Password"
+          value={formData.confPass}
+          onChange={handleChange}
+        />
             
+          {!!formData.mismatch && <div className="invalid-feedback">{formData.mismatch}</div>}
   
     
       <div className="submit">
-      <button type='submit' id='submit'>LOGIN</button>
+      <button className='btn btn-outline-primary'  type='submit' id='submit'>Register</button>
       <button type='reset' id='reset'>Reset</button>
       </div>
       
   </form>
-  {errorMessage && <p>{errorMessage}</p>}
+
   <div className="link-ext" onClick={()=>{navigate('/login')}}>
     <p>Alredy Registerd!!</p>
   </div>
