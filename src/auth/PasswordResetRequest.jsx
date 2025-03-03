@@ -12,7 +12,7 @@ const PasswordResetRequest = () => {
         setLoading(true)
         try{
             const axiosinstance = AxiosInstance();
-            const response = await axiosinstance.post('/password-reset/',{email});
+            const response = await axiosinstance.post('api/password-reset/',{email});
             alert(`Success": ${response.data.detail}`)
         }catch(error){
             alert(` ${error.response?.data?.error} || Error sending email request`)

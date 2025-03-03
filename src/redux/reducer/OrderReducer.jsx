@@ -3,12 +3,12 @@ import AxiosInstance from "../../ecommerce/tools/AxiosInstance";
 import axios from "axios";
 
 //  getting orders
-export const fetchOrders= createAsyncThunk('orders/FetchOrders',
+export const fetchOrders= createAsyncThunk('/orders/FetchOrders',
     async(token,{rejectWithValue}) =>{
         
         try{
         const axiosinstance = AxiosInstance(token)
-        const response = await axiosinstance.get('/orders/');
+        const response = await axiosinstance.get('api/orders/');
         return response.data
         }catch(error){
             if(error.response){
@@ -24,7 +24,7 @@ export const deleteOrder=createAsyncThunk('orders/deleteOrder',
     async ({id, token},{rejectWithValue}) =>{
         try{
             const axiosinstance = AxiosInstance(token);
-            const response = await axiosinstance.delete(`/orders/${id}/`);
+            const response = await axiosinstance.delete(`api/orders/${id}/`);
             return response.data;
         }catch(error){
             if(error.response){

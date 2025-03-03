@@ -32,7 +32,7 @@ if(error){
   return(
     <div className="container">
      
-    <div className="row row-cols-3 rows-cols-md-4">
+    <div className="row">
       
       {
        !!productValues &&  productValues?.map((item) => (

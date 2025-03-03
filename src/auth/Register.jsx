@@ -53,7 +53,7 @@ const Login = () => {
       try{
           console.log({formData})
           const axiosinstance = AxiosInstance();
-          const response = await axiosinstance.post('/auth/register/',{
+          const response = await axiosinstance.post('api/auth/register/',{
           ...formData
           });
           console.log(response.data.user_role)
@@ -146,12 +146,19 @@ const Login = () => {
             
           {!!formData.mismatch && <div className="invalid-feedback">{formData.mismatch}</div>}
   
-    
-      <div className="submit">
-      <button className='btn btn-outline-primary'  type='submit' id='submit'>Register</button>
-      <button type='reset' id='reset'>Reset</button>
+          <div className="form-row">
+          <div className="col-12">
+            <div className="form-check">
+              <input type="checkbox" className="form-check-input"  value="" id="invalidcheck" required/>
+              <label htmlFor="invalidcheck" className='form-check-label'> Agree to terms and condition</label>
+              <div className="invalid-feedback">You must agree before submitting</div>
+            </div>
+          </div>
+          <div className="col-12">
+            <button type="submit" className="btn btn-outline-primary">Register</button>
+          
       </div>
-      
+      </div>
   </form>
 
   <div className="link-ext" onClick={()=>{navigate('/login')}}>

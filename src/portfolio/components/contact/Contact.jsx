@@ -51,11 +51,19 @@ const Contact = () => {
          
             <textarea type="message" name="message" id="message" rows={5} value={formData.message} placeholder='Enter your Query...' onChange={handleChange} required/>
             </div>
-            <div className="submit">
-            <button type='submit' id='submit'>Submit</button>
-            <button type='reset' id='reset'>Reset</button>
+            <div className="form-row">
+            <div className="col-12">
+            <div className="form-check">
+              <input type="checkbox" className="form-check-input"  value="" id="invalidcheck" required/>
+              <label htmlFor="invalidcheck" className='form-check-label'> Agree to terms and condition</label>
+              <div className="invalid-feedback">You must agree before submitting</div>
             </div>
-            
+          </div>
+          <div className="col-12">
+            <button type="submit" className="btn btn-outline-primary">Submit</button>
+          
+      </div>
+            </div>
         </form>
         </div>
         

@@ -6,7 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import { incrementorder } from '../../redux/reducer/OrderReducer';
 import AxiosInstance from '../tools/AxiosInstance';
 import { remove_cart } from '../../redux/reducer/CartReducer';
+import Spinner from '../tools/Spinner';
+import Ganesh from '../../portfolio/assets/utils/Ganesh';
 const Checkout = ({user}) => {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
  
@@ -22,8 +25,9 @@ const Checkout = ({user}) => {
       };
       return new_item;
   });
+
   console.log([...cart_new_items])
-  const [isSubmitted, setIsSubmitted] = useState(false);
+ 
 
   const [formData, setFormData] = useState({
     fname:'',
@@ -36,18 +40,8 @@ const Checkout = ({user}) => {
     city:'',
     zip:'',
   });
-  const [errors, setErrors] = useState({
-    fname:'',
-    lname:'',
-    email:'',
-    mobileno:'',
-    address:'',
-    country:'',
-    state:'',
-    city:'',
-    zip:'',
-  });
-  console.log({...formData})
+
+  // console.log({...formData})
   
   // form handle
   const handleChange=(e) =>{
@@ -59,128 +53,75 @@ const Checkout = ({user}) => {
     }));
   };
 
-   const validate=()=>{
-    let formErrors ={};
-    let isValid = true;
-    //name validate
-    if(!formData.fname){
-      formErrors.fname = "First Name is Required !!"
-      isValid = false;
-    }
-    if(!formData.lname){
-      formErrors.lname = "Last Name is Required !!"
-      isValid = false;
-    }
-    if(!formData.email){
-      formErrors.email = "Email Name is Required !!"
-      isValid = false;
-    }
-    if(!formData.moblieno){
-      formErrors.moblieno = "Mobile No is Required !!"
-      isValid = false;
-    }
-    if(!formData.address){
-      formErrors.address = "Address is Required !!"
-      isValid = false;
-    }
-    if(!formData.country){
-      formErrors.country = "Please Select Country.. !!"
-      isValid = false;
-    }
-    if(!formData.state){
-      formErrors.state = "Please Choose State is Required !!"
-      isValid = false;
-    }
-    if(!formData.city){
-      formErrors.city = "Please Choose City is Required !!"
-      isValid = false;
-    }
-    if(!formData.zip){
-      formErrors.zip = "please provide valid zip code !!"
-      isValid = false;
-    }
-
-    setErrors(formErrors);
-    return isValid;
-}
-const generateId=() =>{
-  let orderid="";
-  [...cart_items].forEach((ele) => {
-    orderid += ele.product.id;
-  })
-  orderid+=("#"+ total_amount);
-  return orderid;
-}
 
 
 const handleSubmit= async(e)=>{
   e.preventDefault();
-  console.log("submit is clicked")
-
-  const order_detail = {
-    cart_items : [...cart_new_items],
-    total_price : total_amount,
-    delivery_detail : {...formData}
-  }
+  
+  setLoading(true)
+  
   try{
-  dispatch(incrementorder({orderId :generateId(), order_detail: order_detail}))
+    const order_detail = {
+      cart_items : [...cart_new_items],
+      total_price : total_amount,
+      delivery_detail : {...formData}
+    }
   const usid=user.user.id
   const axiosinstance = AxiosInstance(user?.access_token);
-  const response = await axiosinstance.post(`/orders/${usid}/place-order/`, {...order_detail});
-  if(response.status == 402){
+  const response = await axiosinstance.post(`api/orders/${usid}/place-order/`, {...order_detail});
+  if(response.status == 401){
       alert('Session TimeOut. Redirecting to Login....')
       dispatch(remove_user())
-      window.location.replace('/login')
+      navigate('/login')
   }
-  console.log({...order_detail});
+  // console.log({...order_detail});
   alert(`${response.data.detail}`)
   dispatch(remove_cart())
   }catch(error){
-    console.log("error in posting ", error)
+    alert(`${error.response?.data?.error} || failed place order`)
+  }finally{
+    setLoading(false)
   }
-  //  api calling 
-  if(validate()){
-    console.log("validation successfull");
-    // on success
-    // dispatch(incrementorder(order));
-    setIsSubmitted(true);
-    alert("form submitted Successfully!!")
-  }else{
-    console.log("validation unsuccessfull");
-    setIsSubmitted(false);
-  }
+ 
 };
-
-
-
+if(loading){
+  return <Spinner/>
+}
   return (
     
     <div className="contact">
+      <div className="contact-left" id="contact-id">
+    <div className="header">
+      <h2>Login </h2>
+      <span className='close' id="close" onClick={()=>{
+        document.getElementById("contact-id").style.display="none";
+      }}>&times;</span>
+    </div>
       <div className="Back btn btn-outline-primary" onClick={()=>{navigate('/cart')}}> # Back</div>
       <h2>Check Out</h2>
      <form className="was-validated row g-3" onSubmit={handleSubmit} >
       <div className="col-md-4">
         <input type="text" className="form-control" name='fname' placeholder='First Name' value={formData.fname} onChange={(e)=>{handleChange(e)}} required/>
-        {errors.fname && (<span className="invalid-feedback">{errors.fname}</span>)}
+
       </div>
       <div className="col-md-4">
         <input type="text" className="form-control" name='lname' placeholder='LastName' value={formData.lname} onChange={handleChange} required/>
-        {errors.lname && (<span className="invalid-feedback">{errors.lname}</span>)}
+
       </div>
       <div className="col-md-4">
         <input type="email" className="form-control" name='email' placeholder='Email' value={formData.email} onChange={handleChange} required/>
-        {errors.email && (<span className="invalid-feedback">{errors.email}</span>)}
+
       </div>
       <div className="col-md-4">
         <input type="text" className="form-control" name='mobileno' placeholder='Moblie No' value={formData.mobileno} onChange={handleChange} 
         pattern="^[6-9][0-9]{9}$"
         title="please enter valid 10 digit mobile number starting with 6,7,8,9"
         required/>
-        {errors.moblieno && (<span className="invalid-feedback">{errors.moblieno}</span>)}
+        
       </div>
       <div className="col-md-6">
         <input type="text" className="form-control" name='address' placeholder='Address' value={formData.address} onChange={handleChange} required/>
-        {errors.address && (<span className="invalid-feedback">{errors.address}</span>)}
+   
       </div>
 
      {/* country */}
@@ -194,7 +135,7 @@ const handleSubmit= async(e)=>{
           }
         </select>
 
-        {errors.country && (<span className="invalid-feedback">{errors.country}</span>)}
+  
       </div>
 
      
@@ -213,7 +154,6 @@ const handleSubmit= async(e)=>{
         
         </select>
 
-        {errors.state && (<span className="invalid-feedback">{errors.state}</span>)}
       </div>
 
       
@@ -228,7 +168,6 @@ const handleSubmit= async(e)=>{
           }
         </select>
 
-        {errors.country && (<span className="invalid-feedback">{errors.country}</span>)}
       </div>
 
      
@@ -237,8 +176,9 @@ const handleSubmit= async(e)=>{
         pattern="^\d{6}$"
         title='please enter valid 6 digit zip code'
         required/>
-        {errors.zip && (<span className="invalid-feedback">{errors.zip}</span>)}
+       
       </div>
+      <div className="form-row">
           <div className="col-12">
             <div className="form-check">
               <input type="checkbox" className="form-check-input"  value="" id="invalidcheck" required/>
@@ -247,10 +187,15 @@ const handleSubmit= async(e)=>{
             </div>
           </div>
           <div className="col-12">
-            <button type="submit" className="btn btn-primary">Place Order:{total_amount}</button>
+            <button type="submit" className="btn btn-outline-primary">Place Order:{total_amount}</button>
+          </div>
           </div>
      </form>
      </div>
+     <div className="hero-right">
+              <Ganesh />
+         </div>
+    </div>
 
   )
 }

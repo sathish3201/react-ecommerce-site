@@ -57,7 +57,7 @@
                 flex-wrap: wrap;
                 
             }
-            & input{
+            & input[type="text"],input[type="email"],input[type="password"]{
                 flex:1;
                 
                 padding:3px 3px;
@@ -94,7 +94,7 @@
                 }
             }
             & button{
-                width: clamp(100px,5dvw,300px);
+                width: clamp(100px,20dvw,300px);
                 height: clamp(30px,5dvw,40px);
                 padding: 5px 10px;
                 margin : 2px 10px;

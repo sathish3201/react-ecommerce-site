@@ -18,7 +18,7 @@ const Item = ({product , quantity= null}) => {
     <div className='card col-md-3'>
       
         {quantity!== null && <span className="remove-item btn btn-outline-danger"  id ="item-close" onClick={()=>{dispatch(remove_from_cart({id: product.id}))}}>X</span>}
-        <img src={product?.thumbnail} className='card-img-top' alt={"....."} width="100%" />
+        <img src={product?.image} className='card-img-top' alt={"....."} width="100%" />
         <div className="card-body">
           <h5 className="card-title"> Brand : {product?.brand}</h5>
           <p className="card-text text-primary">Price (Rs): {product?.price}</p>

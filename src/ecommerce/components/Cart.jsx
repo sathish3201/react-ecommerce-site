@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 
 import { Link, useNavigate } from 'react-router-dom'
-import axios from 'axios'
+
 import AuthHoc from '../tools/AuthHoc';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Item from './Item';
 
 

@@ -6,7 +6,7 @@ export const fetchProducts= createAsyncThunk(
     async(token, {rejectWithValue})=>{
         try{
             const axiosinstance = AxiosInstance(token);
-            const response = await axiosinstance.get('/products/');
+            const response = await axiosinstance.get('api/products/');
             return response.data
         }catch(error){
             if(error.response){

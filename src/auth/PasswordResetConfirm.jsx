@@ -32,7 +32,7 @@ const validate=()=>{
         setFormData({...formData}, loading= true)
         try{
             const axiosinstance = AxiosInstance();
-            const response = await axiosinstance.post(`/password-reset/${token}/`,{...formData});
+            const response = await axiosinstance.post(`api/password-reset/${token}/`,{...formData});
             alert(`Success: ${response.data.detail}`)
             window.location.replace('/login')
         }catch(error){

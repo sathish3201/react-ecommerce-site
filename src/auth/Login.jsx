@@ -33,7 +33,7 @@ const Login = () => {
     setLoading(true)
     try{
         const axiosinstance = AxiosInstance();
-        const response = await axiosinstance.post('/auth/login/',{
+        const response = await axiosinstance.post('api/auth/login/',{
            ...formData
         });
 
@@ -76,7 +76,7 @@ const Login = () => {
             />
   
    
-  
+
         <PasswordInput
           id = "pass"
           name = "password"
@@ -87,11 +87,18 @@ const Login = () => {
         
        
 
-    
-      <div className="submit">
-      <button className='btn btn-outline-primary'  type='submit' id='submit'>LOGIN</button>
-      <button type='reset' id='reset'>Reset</button>
-      </div>
+        <div className="form-row">
+        <div className="col-12">
+            <div className="form-check">
+              <input type="checkbox" className="form-check-input"  value="" id="invalidcheck" required/>
+              <label htmlFor="invalidcheck" className='form-check-label'> Agree to terms and condition</label>
+              <div className="invalid-feedback">You must agree before submitting</div>
+            </div>
+          </div>
+          <div className="col-12">
+            <button type="submit" className="btn btn-outline-primary">Login</button>
+          </div>
+          </div>
   
   </form>
       

@@ -1,17 +1,15 @@
 import React, { useState } from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import {  useNavigate, useParams } from 'react-router-dom'
 import AuthHoc from '../tools/AuthHoc';
 
-import AxiosInstance from '../tools/AxiosInstance';
-import { useQuery } from '@tanstack/react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { add_to_cart } from '../../redux/reducer/CartReducer';
-import { remove_user } from '../../redux/reducer/UserReducer';
+
 
 const ItemDetail = ({user}) => {
   const navigate = useNavigate();
     const products = useSelector((state) => state.products.productValues)
-    const token= user?.access_token;
+  
     const param = useParams();
     const Itemid = parseInt(param?.id)
     const item = !!Itemid && products.filter((item)=> item.id === Itemid)[0];

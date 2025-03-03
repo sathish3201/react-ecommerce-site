@@ -197,10 +197,10 @@ footer{
   position: absolute;
   right: 20px;
 }
-.form-check{
+/* .form-check{
   transform: scale(1.5);
    &:hover{
     transform: scale(2.5);
    }
-}
+} */
 
