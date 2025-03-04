@@ -22,7 +22,7 @@ const App = () => {
   return (
     <div className="App">
        
-        <Router basename='/'>
+        <Router basename='/react-ecommerce-site'>
           <div className="nav-section">
             <Navbar user={user} />
           </div>
