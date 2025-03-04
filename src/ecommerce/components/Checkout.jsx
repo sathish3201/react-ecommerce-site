@@ -92,13 +92,13 @@ if(loading){
     <div className="contact">
       <div className="contact-left" id="contact-id">
     <div className="header">
-      <h2>Login </h2>
+      <h2>Checkout</h2>
       <span className='close' id="close" onClick={()=>{
         document.getElementById("contact-id").style.display="none";
       }}>&times;</span>
     </div>
       <div className="Back btn btn-outline-primary" onClick={()=>{navigate('/cart')}}> # Back</div>
-      <h2>Check Out</h2>
+      
      <form className="was-validated row g-3" onSubmit={handleSubmit} >
       <div className="col-md-4">
         <input type="text" className="form-control" name='fname' placeholder='First Name' value={formData.fname} onChange={(e)=>{handleChange(e)}} required/>

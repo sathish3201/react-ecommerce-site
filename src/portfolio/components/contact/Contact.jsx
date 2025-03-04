@@ -24,6 +24,7 @@ const Contact = () => {
       alert(`${response.data.detail}`)
     }catch(error){
       alert(` Network Error: ${error.response}`)
+      
     } 
   }
   return (
@@ -62,7 +63,7 @@ const Contact = () => {
           <div className="col-12">
             <button type="submit" className="btn btn-outline-primary">Submit</button>
           
-      </div>
+           </div>
             </div>
         </form>
         </div>

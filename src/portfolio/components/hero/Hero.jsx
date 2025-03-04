@@ -1,19 +1,13 @@
 import React,{useRef, useState} from 'react'
-// import { SocialIcon } from 'react-social-icons';
+
 import "./Hero.css"
 import { Navigate } from 'react-router-dom';
 import Ganesh from '../../assets/utils/Ganesh';
 import Login from '../../../auth/Login';
 
 const Hero = () => {
-  const [islight,setIsLight] = useState(false);
-  const check=(event)=>{
-    if(event.target.checked){
-        setIsLight(true);
-    }else{
-        setIsLight(false);
-    }
-  }
+  
+ 
   return (
    <div className="hero">
     <div className="hero-left">
@@ -31,10 +25,7 @@ const Hero = () => {
           
         <li className='theme-item'>
           
-          <input type="checkbox" id="theme" onChange={check}/>
-          <label htmlFor="theme"><span>
-            {islight? "Dark": "Light"} Mode
-            </span></label>
+        <input type='checkbox' className="theme" id='theme' />
         
         </li>
         <li className='login'>

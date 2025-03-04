@@ -16,10 +16,12 @@ const ItemDetail = ({user}) => {
     const [isAdded, setIsAdded] = useState(false);
     const dispatch = useDispatch();  
   return (
-   <>
+    <>
     <div className="Back btn btn-outline-primary" onClick={()=>{navigate('/homepage')}}> # Back</div>
     <div>
-      <div className="card card-item d-flex flex-wrap align-content-center justify-content-evenly" >
+   <div className="card-deck">
+    
+      <div className="card" >
            
                     <img src={item?.image} alt=" image " />
 
@@ -53,6 +55,8 @@ const ItemDetail = ({user}) => {
              }}
              >{isAdded ? "GO TO CART": "ADD TO CART"}</button>
       </div>
+    </div>
+    
     </div>
     </>
   )

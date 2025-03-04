@@ -17,7 +17,6 @@
 }
 
 body{
-
   background-color: var(--background-color);
   color: var(--color);
   width: 100%;
@@ -67,9 +66,9 @@ ul{
   margin: 3px;
   font-weight: bold;
 }
-#theme{
+/* #theme{
   display: none;
-}
+} */
 
 input{
   color :var(--hero-head);
@@ -113,7 +112,8 @@ span:hover{
   flex-wrap: wrap;
   overflow-x: hidden;
   transition: all 2s ease-out;
- 
+ position: static;
+
 }
 
 .navbar-left{
@@ -207,13 +207,28 @@ footer{
 .navbar-right.responsive{
   display: none
 }
+#menu-bar{
+position: absolute;
+top:20px;
+right: 30px;
+z-index : 10;
+}
 
+
+  
 /*  phones */
 @media  screen and (max-width: 768px) {
   .navbar-right.responsive{
     display: flex;
+   transition:all 2s ease;
+   
   }
-  
+  .navbar-right.responsive .links{
+    
+    flex-direction: column;
+    top: 20px;
+    right: 20px;
+  }
   
 }
 /* tablets large phone
@@ -241,3 +256,27 @@ footer{
 @media  screen and (min-width: 1200px) {
 
 }
+
+.nav-section{
+  position: relative;
+  z-index: 20;
+}
+
+
+
+
+/* icons */
+.fa {
+  padding: 20px;
+  font-size: 30px;
+  width: 30px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
+  border-radius: 50%;
+}
+
+.fa:hover {
+    opacity: 0.7;
+}
+

@@ -15,28 +15,34 @@ import { fetchProducts } from '../../redux/reducer/ProductReducer';
 const ProductList = ({user}) => { 
 const token = user?.access_token;
 const dispatch = useDispatch();
+const [loaded, setLoaded] = useState(false);
 const {productValues, loading, error} = useSelector((state) => state.products)
 
+
 useEffect(()=>{
+  if(!loaded){
   dispatch(fetchProducts(token))
+  setLoaded(true)
+  }
 },[dispatch , token])
 
 if(loading){
   return <Spinner/>
 }
 if(error){
+  window.location.reload()
   return <div className="error"> Error in Fetching products ....{error.message}</div>
 }
 
 
   return(
     <div className="container">
-     
-    <div className="row">
+    {!productValues?.length? <h2>No Products Availble Right Now...</h2>:
+    <div className="card-deck">
       
       {
        !!productValues &&  productValues?.map((item) => (
-          <div className="col" key={item.id}>
+          <div className="card" key={item.id}>
           <Link to={`/item/${item.id}`}>
             <Item
               product= {item}
@@ -48,6 +54,7 @@ if(error){
 
       }
     </div>
+    }
     </div>
 )
 }

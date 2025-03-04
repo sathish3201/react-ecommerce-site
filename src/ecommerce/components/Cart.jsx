@@ -18,26 +18,31 @@ const Cart = ({user}) => {
   <div className="cart-container">
     <div className="Back btn btn-outline-primary" onClick={()=>{navigate('/homepage')}}> # Back</div>
     <h1>Cart</h1>
-    
-    <div className="cart-list row">
+    {!cart?.length? <h2> No items in Cart!!!</h2>: 
+    <div className="card-deck">
+      
         {
             
            !!cart &&  cart.map((item) => 
-           
-            (
-               <Item  key={item.product.id}
+           <div className="card" key={item.product.id}>
+            
+               <Item  
                     product = {item.product}
                     quantity = {item.quantity}
                /> 
-            ))
+            
+            </div>
+            )
+            
         }
-    </div>
-    <Link to="/checkout">
+        <Link to="/checkout">
   
             <button type="submit" className="btn btn-primary">Next:{total_amount}</button>
-  
-    </Link>
+
+      </Link>
+    </div>
     
+     } 
   
    
   </div>

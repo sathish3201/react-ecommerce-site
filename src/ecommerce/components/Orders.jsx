@@ -9,21 +9,29 @@ import Spinner from '../tools/Spinner'
 const Orders = ({user}) => {
   const token = user?.access_token;
   const dispatch = useDispatch();
+  const [loaded, setLoaded] = useState(false);
   const {orderValues, loading, error} = useSelector((state)=> state.orders)
 
   useEffect(()=>{
+    if(!loaded){
     dispatch(fetchOrders(token))
+    setLoaded(true)
+    }
   },[dispatch, token])
 
   if(loading){
     return <Spinner/>
   }
   if(error){
-    return <p>Error : {error}</p>
+    window.location.reload()
+    return <p>Error : order fetching{error}</p>
   }
 
   return (
-      <>
+    <div className="container">
+
+    {!orderValues?.length? <h2> No Orders yet....</h2>: 
+     <div className="card-deck">
       {
         !!orderValues && orderValues?.map((order)=>(
 
@@ -49,7 +57,10 @@ const Orders = ({user}) => {
          </div>
         ))
       }
-    </>
+   
+   </div>
+   }
+    </div>
   )
 }
 

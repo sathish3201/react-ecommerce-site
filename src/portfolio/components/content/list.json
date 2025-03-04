@@ -1,7 +1,7 @@
 {
     "project":{
         "Online-Store":{
-            "image" : "./src/assets/react.svg",
+            "image" : "./react.svg",
             "description" : "This is Fully customized and Load balanced online-store with backend API micro-services, with frontend React js, Mysql Databases."
         },
         "Snake-Game":{

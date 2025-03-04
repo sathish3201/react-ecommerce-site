@@ -15,7 +15,7 @@ const Item = ({product , quantity= null}) => {
     }
  }
   return (
-    <div className='card col-md-3'>
+    <>
       
         {quantity!== null && <span className="remove-item btn btn-outline-danger"  id ="item-close" onClick={()=>{dispatch(remove_from_cart({id: product.id}))}}>X</span>}
         <img src={product?.image} className='card-img-top' alt={"....."} width="100%" />
@@ -33,8 +33,7 @@ const Item = ({product , quantity= null}) => {
         <div className="cart-footer">
           <small className="text-muted"> {product?.rating} &#9733; </small>
         </div>
-    </div>
-  
+    </>
   )
 }
 
