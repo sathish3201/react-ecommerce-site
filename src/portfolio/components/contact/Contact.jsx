@@ -20,7 +20,7 @@ const Contact = () => {
     e.preventDefault();
     try{
       const axiosinstance = AxiosInstance();
-      const response = await axiosinstance.post('/auth/contact/',{...formData})
+      const response = await axiosinstance.post('api/auth/contact/',{...formData})
       alert(`${response.data.detail}`)
     }catch(error){
       alert(` Network Error: ${error.response}`)

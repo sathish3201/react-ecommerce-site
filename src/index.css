@@ -125,6 +125,7 @@ span:hover{
   flex-wrap: wrap;
 }
 .navbar-right{
+  display: none;
   flex-wrap: wrap;
 }
 a{
@@ -155,7 +156,7 @@ input[type="search"]:focus{
   color: violet;
 }
 .navbar-left .logo{
-  background-image: url("../../assets/home/home-ganesh.avif");
+  background-image: url("./portfolio/assets/home/home-ganesh.avif");
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -203,4 +204,40 @@ footer{
     transform: scale(2.5);
    }
 } */
+.navbar-right.responsive{
+  display: none
+}
 
+/*  phones */
+@media  screen and (max-width: 768px) {
+  .navbar-right.responsive{
+    display: flex;
+  }
+  
+  
+}
+/* tablets large phone
+@media  screen and (min-width: 600px) {
+ 
+} */
+/* landscape tablets */
+@media  screen and (min-width: 768px) {
+  #menu-bar{
+    display: none;
+  }
+  .navbar-right{
+    display: flex;
+  }
+  .navbar-right.responsive .links{
+      display: block;
+  }
+ 
+}
+/* laptop desktops */
+@media  screen and (min-width: 992px) {
+
+}
+/* large laptops */
+@media  screen and (min-width: 1200px) {
+
+}
