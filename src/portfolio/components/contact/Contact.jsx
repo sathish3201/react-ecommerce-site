@@ -23,6 +23,9 @@ const Contact = () => {
       const response = await axiosinstance.post('api/auth/contact/',{...formData})
       alert(`${response.data.detail}`)
     }catch(error){
+      if(error.response?.status ===  404){
+        alert("User not found!!!")
+      }
       alert(` Network Error: ${error.response}`)
       
     } 
