@@ -59,7 +59,7 @@ const validate=()=>{
       
   <div className='contact'>
 
-  <div className="contact-left" id="contact-id">
+  <div className="cont-box" id="contact-id">
     <div className="header">
       <h2>Password Reset </h2>
       <span className='close' id="close" onClick={()=>{
@@ -90,7 +90,7 @@ const validate=()=>{
     
       <div className="submit">
       <button className='btn btn-outline-primary' type='submit' id='submit'>Submit</button>
-      <button type='reset' id='reset'>Reset</button>
+   
       </div>
       
   </form>

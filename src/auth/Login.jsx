@@ -43,6 +43,7 @@ const Login = () => {
         alert("Login Successfull !!!")
         navigate('/homepage')
     }catch(error){
+      console.log(error)
        alert(`${error.response?.data?.error} || error in login`)
     }finally{
       setLoading(false)
@@ -55,7 +56,7 @@ const Login = () => {
     
   <div className='contact'>
 
-  <div className="contact-left" id="contact-id">
+  <div className="cont-box" id="contact-id">
     <div className="header">
       <h2>Login </h2>
       <span className='close' id="close" onClick={()=>{
@@ -63,11 +64,11 @@ const Login = () => {
       }}>&times;</span>
     </div>
 
-  <form onSubmit={handleSubmit} className='was-validated mb-3'>
+  <form onSubmit={handleSubmit} className='was-validated row g-3'>
      
       <input 
               name='email'
-              className='form-control'
+              className='form-control col-md-4'
               type = "email"
               placeholder='Email'
               value={formData.email}

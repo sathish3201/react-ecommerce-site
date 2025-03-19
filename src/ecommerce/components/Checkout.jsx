@@ -8,6 +8,8 @@ import AxiosInstance from '../tools/AxiosInstance';
 import { remove_cart } from '../../redux/reducer/CartReducer';
 import Spinner from '../tools/Spinner';
 import Ganesh from '../../portfolio/assets/utils/Ganesh';
+import { v4 as uuidv4 } from 'uuid';
+
 const Checkout = ({user}) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -66,31 +68,75 @@ const handleSubmit= async(e)=>{
       total_price : total_amount,
       delivery_detail : {...formData}
     }
-  const usid=user.user.id
+  const usid=user.user.id;
   const axiosinstance = AxiosInstance(user?.access_token);
+//   alert("doing payment processing")
+//   const order_id= uuidv4();
+
+//   const response= await axiosinstance.post(`api/payment/`,{
+//     total_price : total_amount+"",
+//     cust_id : usid+"",
+//     order_id : order_id,
+//   })
+ 
+//   if(response.status !== 200){
+//       throw new Error("Error in getting response")
+//   }
+//   console.log(response)
+  
+
+//   // const response_2= await axiosinstance.post(`api/payment/callback/`,{
+//   //   order_id : order_id,
+//   // })
+// //  console.log(response_2)
+// //  const form = document.createElement('form')
+// // //  console.log(response.data.ORDER_ID)
+
+// const url1=`https://securegw-stage.paytm.in/theia/api/v1/initiateTransaction?mid=${response.data.MID}&orderId=${request.data.ORDER_ID}`;
+// const url2= "https://secure.paytm.in/oltp-web/processTransaction";
+//  alert(`url= ${url1}`)
+// const url3= "https://securegw-stage.paytm.in/order/process";
+// form.action = url3;
+//  form.method = "POST";
+//  Object.keys(response?.data)?.map(key => {
+//   const input= document.createElement('input');
+//   input.type = 'hidden';
+//   input.key = key;
+//   input.name=key;
+//   input.value = response.data[key];
+//   form.appendChild(input);
+//   });
+//   console.log(form)
+// document.body.appendChild(form);
+// form.submit()
+
+// alert(`${response?.data}`)
+
+  alert("adding order in order")
   const response = await axiosinstance.post(`api/orders/${usid}/place-order/`, {...order_detail});
-  if(response.status == 401){
-      alert('Session TimeOut. Redirecting to Login....')
-      dispatch(remove_user())
-      navigate('/login')
-  }
+  
   // console.log({...order_detail});
   alert(`${response.data.detail}`)
   dispatch(remove_cart())
   }catch(error){
+    if(error.response?.status === 401){
+      alert('Session timeout.. please Login again...')
+      window.location.reload();
+    }
     alert(`${error.response?.data?.error} || failed place order`)
+    
   }finally{
     setLoading(false)
   }
  
 };
 if(loading){
-  return <Spinner/>
+  return <div className="spin-class"><Spinner/></div>
 }
   return (
     
-    <div className="contact">
-      <div className="contact-left" id="contact-id">
+    <div className="container">
+      <div className="cont-box" id="contact-id">
     <div className="header">
       <h2>Checkout</h2>
       <span className='close' id="close" onClick={()=>{

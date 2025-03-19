@@ -31,9 +31,9 @@ const Contact = () => {
     } 
   }
   return (
-    <div className='contact'>
+    <div className='container'>
 
-        <div className="contact-left" id="contact-id">
+        <div className="cont-box" id="contact-id">
           <div className="header">
             <h2>Contact Form</h2>
             <span className='close' id="close" onClick={()=>{
@@ -41,20 +41,20 @@ const Contact = () => {
             }}>&times;</span>
           </div>
        
-        <form onSubmit={handleSubmit} className='was-validate'>
+        <form onSubmit={handleSubmit} className='was-validated row g-3'>
            
-            <div className="form-control">
+          
          
-            <input type="email" name="email" id="email" placeholder='Email' value={formData.email} onChange={handleChange} required/>
-            </div>
-            <div className="form-control">
+            <input  className= "form-control col-md-4" type="email" name="email" id="email" placeholder='Email' value={formData.email} onChange={handleChange} required/>
+      
+          
            
-           <input type="text" name="subject" id="subject" placeholder='Subject' value={formData.subject} onChange={handleChange} required/>
-           </div>
-            <div className="form-control">
+           <input className="form-control col-md-4" type="text" name="subject" id="subject" placeholder='Subject' value={formData.subject} onChange={handleChange} required/>
+          
          
-            <textarea type="message" name="message" id="message" rows={5} value={formData.message} placeholder='Enter your Query...' onChange={handleChange} required/>
-            </div>
+         
+            <textarea  className="form-control col-md-4" type="message" name="message" id="message" rows={5} value={formData.message} placeholder='Enter your Query...' onChange={handleChange} required/>
+            
             <div className="form-row">
             <div className="col-12">
             <div className="form-check">

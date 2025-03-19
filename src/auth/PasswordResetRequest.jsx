@@ -27,7 +27,7 @@ const PasswordResetRequest = () => {
      
   <div className='contact'>
 
-  <div className="contact-left" id="contact-id">
+  <div className="cont-box" id="contact-id">
     <div className="header">
       <h2>Enter Email </h2>
       <span className='close' id="close" onClick={()=>{
@@ -35,11 +35,11 @@ const PasswordResetRequest = () => {
       }}>&times;</span>
     </div>
 
-  <form onSubmit={handleSubmit} className='was-validated mb-3'>
+  <form onSubmit={handleSubmit} className='was-validated mb-3 row g-3'>
      
       <input 
               name='email'
-              className='form-control'
+              className='form-control col-md-4'
               type = "email"
               placeholder='Email'
               value={email}
@@ -50,7 +50,7 @@ const PasswordResetRequest = () => {
     
       <div className="submit">
       <button className='btn btn-outline-primary' type='submit' id='submit'>Submit</button>
-      <button type='reset' id='reset'>Reset</button>
+  
       </div>
      
   </form>

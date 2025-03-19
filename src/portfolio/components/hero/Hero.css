@@ -22,6 +22,7 @@
     margin: 20px 30px;
 }
 .name{
+    width: 20ch;
     font-size: clamp(50px,60px,80px);
     padding: 0 10px;
     font-style: oblique;
@@ -32,6 +33,15 @@
     transform: scale(0.8);
     transition: all 0.4s ease-in-out;
     border-radius: 2rem;
+    text-wrap: nowrap;
+    overflow: hidden;
+    animation: typing 2s steps(20) infinite alternate-reverse;
+    
+}
+@keyframes typing {
+    from {
+        width: 0ch;
+    }
 }
 .name:hover{
     padding: 2px 3px;

@@ -14,12 +14,13 @@ const Hero = () => {
         <div className="title">
             <div className="line">
               
-              Hi,&nbsp;I'm<span className='name'>Sathish</span></div>
-            <div className="line-2">Software Developer</div>
+              Hi,&nbsp;I'm<span className='name'> Sathish</span></div>
+            <div className="line-2 soft-anitext">Software Developer</div>
         </div>
-        <div className="caption">
+        <div className="caption cap-anitext">
           <p> I'm Passionate to Develop responsive UI/UX Design.</p>
         </div>
+    <span className="parent"><span className="child">hello</span></span>
         
         <ul className="links">
           

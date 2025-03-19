@@ -7,7 +7,7 @@ const PasswordInput = ({id,placeholder, name, value, onChange}) => {
       <input 
         id={id}
         type={show ? `text` : `password`}
-        className='form-control'
+        className='form-control col-md-4'
         name = {name}
         value={value}
         placeholder={placeholder}
@@ -16,9 +16,13 @@ const PasswordInput = ({id,placeholder, name, value, onChange}) => {
         title = "Password must be atleast 8 characters long and contains atleast one upper case letter, one lower case letter, one number and one special character"
         required
       />
-      <label htmlFor={id} className='form-input-label form-label'>
-        <input  className="custom-input-check form-check"  type="checkbox"  id="showPassword"  checked={()=> setShow(true)} onChange={()=> setShow(!show)}/>
-      </label>
+    <div class="form-check mb-3 pt-1">
+
+    <input  className="form-check-input"  type="checkbox"  id="showPassword"  checked={()=> setShow(true)} onChange={()=> setShow(!show)}/>
+    <label  htmlFor={id}  class="form-check-label" for="validationFormCheck1">Show Password</label>
+    
+  </div>
+  
 
     </div>
   )

@@ -77,7 +77,7 @@ const Login = () => {
     
   <div className='contact'>
 
-  <div className="contact-left" id="contact-id">
+  <div className="cont-box" id="contact-id">
     <div className="header">
       <h2>Register </h2>
       <span className='close' id="close" onClick={()=>{
@@ -85,11 +85,45 @@ const Login = () => {
       }}>&times;</span>
     </div>
 
-  <form onSubmit={handleSubmit} className='was-validated '>
+
+    {/* <form class="row g-3">
+  <div class="col-md-4">
+    <label for="validationServer01" class="form-label">First name</label>
+    <input type="text" class="form-control is-valid" id="validationServer01" placeholder='First Name' required/>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <div class="col-md-4">
+    <label for="validationServer02" class="form-label">Last name</label>
+    <input type="text" class="form-control is-valid" id="validationServer02" placeholder='Last Name' required/>
+    <div class="valid-feedback">
+      Looks good!
+    </div>
+  </div>
+  <div class="col-md-4">
+    <label for="validationServerUsername" class="form-label">Username</label>
+    <div class="input-group has-validation">
+      <span class="input-group-text" id="inputGroupPrepend3">@</span>
+      <input type="text" class="form-control is-invalid" id="validationServerUsername" aria-describedby="inputGroupPrepend3 validationServerUsernameFeedback" placeholder='User Name' required/>
+      <div id="validationServerUsernameFeedback" class="invalid-feedback">
+        Please choose a username.
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <label for="validationServer03" class="form-label">City</label>
+    <input type="text" class="form-control is-invalid" id="validationServer03" aria-describedby="validationServer03Feedback" required/>
+    <div id="validationServer03Feedback" class="invalid-feedback">
+      Please provide a valid city.
+    </div>
+  </div>
+  </form> */}
+   <form onSubmit={handleSubmit} className='was-validated row g-3'>
     
     
       <input 
-              className='form-control'
+              className='form-control col-md-4'
               type = "text"
               placeholder='firstName '
               name='fname'
@@ -100,7 +134,7 @@ const Login = () => {
           
             <input 
             name='lname'
-            className='form-control '
+            className='form-control col-md-4 '
             type = "text"
             placeholder='Last Name'
             value={formData.lname}
@@ -112,7 +146,7 @@ const Login = () => {
 
            <input 
            name='email'
-            className='form-control'
+            className='form-control col-md-4'
             type = "email"
             placeholder='Email'
             value={formData.email}
@@ -121,16 +155,18 @@ const Login = () => {
             title="Please enter valid  email address."
             required
           />
+          <div class="input-group has-validation">
+          <span class="input-group-text" id="inputGroupPrepend3">@</span>
            <input 
             name='username'
-            className='form-control '
+            className='form-control col-md-4'
             type = "text"
             placeholder='Username'
             value={formData.username}
             onChange={handleChange}
             required
           />
-   
+        </div>
         <PasswordInput 
           id = "pass"
           name = "password"
@@ -166,7 +202,7 @@ const Login = () => {
 
   <div className="link-ext" onClick={()=>{navigate('/login')}}>
     <p>Alredy Registerd!!</p>
-  </div>
+  </div> 
   </div>
   <div className="hero-right">
     <Ganesh />

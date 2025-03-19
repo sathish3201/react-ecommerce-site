@@ -27,7 +27,7 @@ useEffect(()=>{
 },[dispatch , token])
 
 if(loading){
-  return <Spinner/>
+  return <div className="spin-class"><Spinner/></div>
 }
 if(error){
   window.location.reload()
