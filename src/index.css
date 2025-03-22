@@ -73,11 +73,7 @@ ul{
 input{
   color :var(--hero-head);
 }
-body:has(#theme:checked){
-    --light-theme:1;
-     --color : #121212;
-     --background-color: #f9f9f9;
-} 
+
 span:hover{
   cursor: pointer;
   box-shadow: var(--light-theme);
@@ -343,6 +339,14 @@ transform: rotateY('180deg');
   }
 }
 
+.spinner-adjust{
+  display: flex;
+  align-content: center;
+}
+
+.background .light{
+
+}
 
 
 

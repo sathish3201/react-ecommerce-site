@@ -19,7 +19,7 @@ const PasswordInput = ({id,placeholder, name, value, onChange}) => {
     <div class="form-check mb-3 pt-1">
 
     <input  className="form-check-input"  type="checkbox"  id="showPassword"  checked={()=> setShow(true)} onChange={()=> setShow(!show)}/>
-    <label  htmlFor={id}  class="form-check-label" for="validationFormCheck1">Show Password</label>
+    <label  htmlFor="showPassword"  className="form-check-label" >Show Password</label>
     
   </div>
   

@@ -7,11 +7,11 @@ import Spinner from '../ecommerce/tools/Spinner'
 import Ganesh from '../portfolio/assets/utils/Ganesh';
 const PasswordResetConfirm = () => {
     const {token} = useParams();
+    const [loading, setLoading] = useState(false);
 
     const [formData, setFormData] = useState({
         password:'',
         confPass:'',
-        loading:false,
     });
 
 const validate=()=>{
@@ -29,16 +29,16 @@ const validate=()=>{
     const handleSubmit= async(e)=>{
         e.preventDefault();
         if(validate()){
-        setFormData({...formData}, loading= true)
         try{
+            setLoading(true)
             const axiosinstance = AxiosInstance();
             const response = await axiosinstance.post(`api/password-reset/${token}/`,{...formData});
             alert(`Success: ${response.data.detail}`)
             window.location.replace('/login')
         }catch(error){
-            alert(` ${error.response?.data?.error} || Error setting password`)
+            alert(` ${error.response?.data?.detail} || Error setting password`)
         }finally{
-            setFormData({...formData},loading= false)
+            setLoading(false)
         }
     }   
     }
@@ -51,7 +51,7 @@ const validate=()=>{
         }))
     }
     
-    if(formData.loading){
+    if(loading){
         return <Spinner />
     }
 

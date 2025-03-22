@@ -20,13 +20,13 @@ const Hero = () => {
         <div className="caption cap-anitext">
           <p> I'm Passionate to Develop responsive UI/UX Design.</p>
         </div>
-    <span className="parent"><span className="child">hello</span></span>
+  
         
         <ul className="links">
           
         <li className='theme-item'>
           
-        <input type='checkbox' className="theme" id='theme' />
+        <input type='checkbox' className="theme" />
         
         </li>
         <li className='login'>

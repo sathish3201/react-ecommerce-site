@@ -14,7 +14,7 @@ const Checkout = ({user}) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
- 
+ const [ordered, setOrdered] = useState(false);
   const cart_items = useSelector((state) => state.cart.cartValues);
   const total_amount = useSelector((state)=> state.cart.total_price);
 
@@ -63,22 +63,21 @@ const handleSubmit= async(e)=>{
   setLoading(true)
   
   try{
-    const order_detail = {
-      cart_items : [...cart_new_items],
-      total_price : total_amount,
-      delivery_detail : {...formData}
-    }
+ 
   const usid=user.user.id;
   const axiosinstance = AxiosInstance(user?.access_token);
-//   alert("doing payment processing")
-//   const order_id= uuidv4();
+  alert("doing payment processing")
+  const order_id= uuidv4();
 
-//   const response= await axiosinstance.post(`api/payment/`,{
-//     total_price : total_amount+"",
-//     cust_id : usid+"",
-//     order_id : order_id,
-//   })
- 
+  const response_payment= await axiosinstance.post(`api/payment/`,{
+    total_price : total_amount+"",
+    cust_id : usid+"",
+    order_id : order_id,
+  })
+if(response_payment?.data?.body?.resultInfo?.resultStatus === "F"){
+  alert(`Failed place order reason: ${response_payment?.data?.body?.resultInfo?.resultMsg}`)
+  throw new Error("payment is Failed");
+ }
 //   if(response.status !== 200){
 //       throw new Error("Error in getting response")
 //   }
@@ -111,13 +110,21 @@ const handleSubmit= async(e)=>{
 // form.submit()
 
 // alert(`${response?.data}`)
-
+if(response_payment?.data?.body?.resultInfo?.resultStatus === "T"){
+  const order_detail = {
+    id:order_id,
+    cart_items : [...cart_new_items],
+    total_price : total_amount,
+    delivery_detail : {...formData}
+  }
   alert("adding order in order")
   const response = await axiosinstance.post(`api/orders/${usid}/place-order/`, {...order_detail});
   
   // console.log({...order_detail});
   alert(`${response.data.detail}`)
   dispatch(remove_cart())
+  setOrdered(true)
+  }
   }catch(error){
     if(error.response?.status === 401){
       alert('Session timeout.. please Login again...')
@@ -128,10 +135,13 @@ const handleSubmit= async(e)=>{
   }finally{
     setLoading(false)
   }
- 
+
 };
 if(loading){
   return <div className="spin-class"><Spinner/></div>
+}
+if(ordered){
+  navigate('/orders')
 }
   return (
     
@@ -232,8 +242,9 @@ if(loading){
               <div className="invalid-feedback">You must agree before submitting</div>
             </div>
           </div>
-          <div className="col-12">
-            <button type="submit" className="btn btn-outline-primary">Place Order:{total_amount}</button>
+          <div className="col-12 ">
+            <button type="submit" className="btn btn-outline-primary m-2">Place Order:{total_amount}</button>
+     
           </div>
           </div>
      </form>
