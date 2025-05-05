@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import AxiosInstance from "../../ecommerce/tools/AxiosInstance";
 
+
 export const fetchProducts= createAsyncThunk(
     'product/fetchProducts',
     async(token, {rejectWithValue})=>{
@@ -18,11 +19,13 @@ export const fetchProducts= createAsyncThunk(
     }
 )
 
+
 const initialState = {
-    productValues : [],
+    productValues :  [],
     loading:false,
     error:null
 }
+console.log(initialState.productValues)
 
 const ProductReducer = createSlice({
     name : "ProductReducer",
@@ -34,6 +37,9 @@ const ProductReducer = createSlice({
         decrementProduct : (state, action) =>{
             state.productValues = state.productValues.filter(item => item !== action.payload)
         },
+        addProducts : (state, action) =>{
+            state.productValues = action.payload
+        }
     },
     extraReducers: (builder) =>{
         builder
@@ -41,7 +47,7 @@ const ProductReducer = createSlice({
                 state.loading = true
             })
             .addCase(fetchProducts.fulfilled, (state, action) =>{
-                state.loading = false,
+                state.loading = false;
                 state.productValues = action.payload;
                 console.log("fetched Products Data: ",action.payload)
             })
@@ -50,8 +56,9 @@ const ProductReducer = createSlice({
                 state.error = action.payload;
                 console.log("fetched Error Products: ",action.payload)
             })
+           
     }
 })
 
-export const {incrementProduct, decrementProduct} = ProductReducer.actions;
+export const {incrementProduct, decrementProduct, addProducts} = ProductReducer.actions;
 export default ProductReducer.reducer

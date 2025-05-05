@@ -23,7 +23,7 @@ const Orders = ({user}) => {
     return <Spinner/>
   }
   if(error){
-    // window.location.reload()
+     window.location.reload()
     return <p>Error : order fetching :{error}</p>
   }
 

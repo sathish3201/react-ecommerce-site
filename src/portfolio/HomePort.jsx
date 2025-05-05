@@ -9,6 +9,7 @@ import '../App.css'
 
 const HomePort = () => {
   localStorage.removeItem("user_role");
+ 
   return (
       <>
         <div className="hero-section" id="home"> <Hero/></div>

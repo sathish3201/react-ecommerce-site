@@ -2,6 +2,7 @@ import React from 'react'
 
 const Spinner = () => {
   return (
+      <div className="spinner">
     <div className='container spinner-adjust'>
       <div className="spinner-grow text-primary" role='status'>
             <span className="visually-hidden">Loading...</span>
@@ -24,6 +25,7 @@ const Spinner = () => {
       <div className="spinner-grow text-dark" role='status'>
             <span className="visually-hidden">Loading...</span>
       </div>
+    </div>
     </div>
   )
 }

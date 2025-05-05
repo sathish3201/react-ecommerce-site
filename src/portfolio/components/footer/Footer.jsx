@@ -3,6 +3,7 @@ import "./Footer.css";
 const Footer = () => {
   console.log(document.getElementById("contact"));
   return (
+    <div className="footer">
     <footer className='container sticky-bottom'>
         <div className="footer-left">
             <div className="logo"></div>
@@ -21,6 +22,7 @@ const Footer = () => {
               <a href="https://www.linkedin.com/in/sathish-chakali-91221b320/" class="fa fa-linkedin" target='blank'> </a>
           </div>
     </footer>
+    </div>
   )
 }
 

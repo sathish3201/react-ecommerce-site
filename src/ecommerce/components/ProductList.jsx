@@ -8,8 +8,8 @@ import Spinner from '../tools/Spinner'
 import AxiosInstance from '../tools/AxiosInstance';
 import { useDispatch, useSelector } from 'react-redux';
 import { remove_user } from '../../redux/reducer/UserReducer';
-import { fetchProducts } from '../../redux/reducer/ProductReducer';
-
+import { addProducts, fetchProducts } from '../../redux/reducer/ProductReducer';
+import item from '../../assets/fake_store.json'
 
 
 const ProductList = ({user}) => { 
@@ -34,10 +34,13 @@ if(error){
   return <div className="error"> Error in Fetching products ....{error.message}</div>
 }
 
-
+console.log(productValues)
   return(
     <div className="container">
-    {!productValues?.length? <h2>No Products Availble Right Now...</h2>:
+    {!productValues?.length?  
+      dispatch(addProducts(item.products))
+    // <h2>No Products Availble Right Now...</h2>
+    :
     <div className="card-deck">
       
       {

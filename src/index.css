@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 *{
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
@@ -349,7 +351,15 @@ transform: rotateY('180deg');
 }
 
 
+.spinner{
+  position: absolute;
+  left: 45%;
+  top: 47%;
+}
 
-
+.footer{
+  position: sticky;
+  bottom: 0px;
+}
 
 
